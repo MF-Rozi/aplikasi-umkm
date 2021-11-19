@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateTransactionsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('code');
+            $table->string('grand_total');
+            $table->string('status');
+            $table->string('payment_token');
+            $table->string('payment_url');
+            $table->string('note'); // text atau string?
+            $table->timestamp('cencelation_at');
+            $table->string('cancelation_note'); // text atau string?
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('transactions');
+    }
+}
