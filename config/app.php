@@ -175,6 +175,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * External Service Providers...
+         */
+        Spatie\Permission\PermissionServiceProvider::class,
+
+
     ],
 
     /*
