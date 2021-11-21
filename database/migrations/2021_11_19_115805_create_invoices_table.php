@@ -22,6 +22,7 @@ class CreateInvoicesTable extends Migration
             $table->string('status');
             $table->text('full_adress');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('transaction_id')->references('id')->on('transactions');
         });

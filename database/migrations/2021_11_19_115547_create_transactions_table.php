@@ -25,6 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->timestamp('cencelation_at');
             $table->string('cancelation_note'); // text atau string?
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
         });

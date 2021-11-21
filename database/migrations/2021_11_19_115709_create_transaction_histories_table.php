@@ -18,6 +18,7 @@ class CreateTransactionHistoriesTable extends Migration
             $table->unsignedBigInteger('transaction_id');
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('transaction_id')->references('id')->on('transactions');
         });

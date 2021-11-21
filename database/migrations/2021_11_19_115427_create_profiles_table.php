@@ -26,6 +26,8 @@ class CreateProfilesTable extends Migration
             $table->string('state');
             $table->string('post_code');
             $table->timestamps();
+            $table->softDeletes();
+
 
             $table->foreign('user_id')->references('id')->on('users');
         });

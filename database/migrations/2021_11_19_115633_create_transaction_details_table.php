@@ -21,6 +21,7 @@ class CreateTransactionDetailsTable extends Migration
             $table->integer('base_price');
             $table->integer('sub_total');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('transaction_id')->references('id')->on('transactions');

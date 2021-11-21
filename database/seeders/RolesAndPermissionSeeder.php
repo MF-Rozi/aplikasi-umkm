@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -72,7 +73,7 @@ class RolesAndPermissionSeeder extends Seeder
         'add to cart',
         'remove from cart',
         'clear cart',
-        'view own notificaition',
+        'view own notification',
     'update own profile']);
 
 

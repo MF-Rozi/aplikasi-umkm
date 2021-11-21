@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->string('code');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

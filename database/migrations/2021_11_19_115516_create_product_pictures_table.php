@@ -19,6 +19,7 @@ class CreateProductPicturesTable extends Migration
             $table->string('file_name');
             $table->string('metadata');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('product_id')->references('id')->on('products');
         });

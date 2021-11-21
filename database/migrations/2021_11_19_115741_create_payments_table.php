@@ -25,6 +25,7 @@ class CreatePaymentsTable extends Migration
             $table->string('biller_code');
             $table->string('biller_key');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
