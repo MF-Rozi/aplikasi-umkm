@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('location')->nullable();
             $table->text('about')->nullable();
             $table->rememberToken();
-            $table->string('telegram_id');
+            $table->string('telegram_id')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
             $table->softDeletes();
