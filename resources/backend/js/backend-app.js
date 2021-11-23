@@ -1,4 +1,4 @@
-require("./backend-bootstrap");
+require("./backend-bootstrap.js");
 require("./plugins/perfect-scrollbar.min.js");
 require("./plugins/smooth-scrollbar.min.js");
 require("./plugins/chartjs.min.js");
