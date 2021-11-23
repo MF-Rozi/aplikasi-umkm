@@ -19,7 +19,6 @@ mix.styles(
     ],
     "public/backend/assets/css/backend.css"
 );
-mix.js(
-    "resources/backend/js/backend-app.js",
-    "public/backend/assets/js"
-).sourceMaps();
+mix.copyDirectory("resources/backend/js", "public/backend/assets/js"
+
+);

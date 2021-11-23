@@ -1,5 +1,5 @@
 @extends('backend.layouts.main')
 
 @section('content')
-<p>aaaa</p>
+<p>aaa</p>
 @endsection
