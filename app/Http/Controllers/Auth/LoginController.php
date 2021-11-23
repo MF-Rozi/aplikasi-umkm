@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -35,6 +36,17 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->hasRole(['admin', 'super-admin']) && $user->isActive()) {
+                $this->redirectTo = route('admin.dashboard');
+            } elseif (!$user->isActive()) {
+                $this->redirectTo = route('blocked');
+            } else {
+                $this->redirectTo = route('frontend.home');
+            }
+        }
+
         $this->middleware('guest')->except('logout');
     }
 }
