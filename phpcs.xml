@@ -73,10 +73,10 @@
     </rule>
     <rule ref="PSR2">
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
-        <properties>
+        <!-- <properties>
             <property name="lineLimit" value="130"/>
             <property name="absoluteLineLimit" value="135"/>
-        </properties>
+        </properties> -->
     </rule>
     <rule ref="Squiz.Arrays.ArrayDeclaration">
         <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned" />

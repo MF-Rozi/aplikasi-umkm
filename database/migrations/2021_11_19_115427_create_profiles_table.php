@@ -19,8 +19,8 @@ class CreateProfilesTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('photo_profile');
-            $table->string('adress1');
-            $table->string('adress2');
+            $table->string('address1');
+            $table->string('address2');
             $table->string('district');
             $table->string('province');
             $table->string('state');

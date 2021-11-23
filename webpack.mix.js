@@ -19,6 +19,5 @@ mix.styles(
     ],
     "public/backend/assets/css/backend.css"
 );
-mix.copyDirectory("resources/backend/js", "public/backend/assets/js"
-
-);
+mix.copyDirectory("resources/backend/js", "public/backend/assets/js");
+mix.js("resources/backend/js/backend-bootstrap.js", "public/backend/assets/js/backend.js");
