@@ -5,5 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin','middleware' => ['role:super-admin|admin']], function () {
 
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('admin.dashboard');
 });
