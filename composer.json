@@ -14,7 +14,6 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3",
         "spatie/laravel-permission": "^5.4"
     },
     "require-dev": {
@@ -25,7 +24,8 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5.10",
-        "squizlabs/php_codesniffer": "3.*"
+        "squizlabs/php_codesniffer": "3.*",
+        "laravel/ui": "^3.3"
     },
     "autoload": {
         "psr-4": {
