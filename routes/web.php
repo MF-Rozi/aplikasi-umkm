@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Backend\HomeController as BackendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,4 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.index');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('backend', function () {
-    return view('backend.dashboard');
-});
-Route::get('bekend', function () {
-    return view('backend.dashbor', [
-        'title' => 'Dashboard',
-    ]);
-});
+Route::get('/home', [BackendController::class, 'index'])->name('home');
