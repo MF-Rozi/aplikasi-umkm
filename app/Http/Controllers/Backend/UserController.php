@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -24,8 +25,8 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function (User $user) {
-                    $btn = '<a href="'.route('admin.user.show', ['slug' => $user->slug])
-                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="javascript:void(0)" class="edit btn btn-warning btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $btn = '<a href="'.route('admin.user.show', ['slug' => $user->profile->slug])
+                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.user.edit', ['slug' => $user->profile->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <a href="'.route('admin.user.delete', ['slug' => $user->profile->slug]).'" class="delete btn btn-danger btn-sm">Delete</a>';
 
                     return $btn;
                 })
@@ -35,8 +36,32 @@ class UserController extends Controller
     }
     public function show($slug)
     {
-        $user = User::where('slug', $slug)->firstOrFail();
+        $profile = Profile::where('slug', $slug)->firstOrFail();
+        $user = User::findOrFail($profile->user_id);
+
         return view('backend.user.show', [
+            'title' => 'User Detail',
+            'user' => Auth::user(),
+            'userDetail' => $user,
+        ]);
+    }
+    public function edit($slug)
+    {
+        $profile = Profile::where('slug', $slug)->firstOrFail();
+        $user = User::findOrFail($profile->user_id);
+
+        return view('backend.user.edit', [
+            'title' => 'User Detail',
+            'user' => Auth::user(),
+            'userDetail' => $user,
+        ]);
+    }
+    public function delete($slug)
+    {
+        $profile = Profile::where('slug', $slug)->firstOrFail();
+        $user = User::findOrFail($profile->user_id);
+
+        return view('backend.user.delete', [
             'title' => 'User Detail',
             'user' => Auth::user(),
             'userDetail' => $user,
