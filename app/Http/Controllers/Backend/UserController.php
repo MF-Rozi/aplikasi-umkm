@@ -24,7 +24,7 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function (User $user) {
-                    $btn = '<a href="'.route('admin.user.show', ['id' => $user->id])
+                    $btn = '<a href="'.route('admin.user.show', ['slug' => $user->slug])
                     .'" class="detail btn btn-info btn-sm">detail</a> <a href="javascript:void(0)" class="edit btn btn-warning btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
 
                     return $btn;
@@ -33,9 +33,9 @@ class UserController extends Controller
                 ->make(true);
         // }
     }
-    public function show($id)
+    public function show($slug)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('slug', $slug)->firstOrFail();
         return view('backend.user.show', [
             'title' => 'User Detail',
             'user' => Auth::user(),
