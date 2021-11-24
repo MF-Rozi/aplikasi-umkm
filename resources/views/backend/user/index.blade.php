@@ -34,11 +34,6 @@
 </div>
 
 
-<form>
-    @csrf
-
-</form>
-
 <script type="text/javascript">
     $(function() {
 
