@@ -14,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes,HasSlug;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
@@ -51,16 +51,8 @@ class User extends Authenticatable
         return $this->status == self::STATUS_ACTIVE;
     }
 
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('email')
-            ->saveSlugsTo('slug');
-    }
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+
+
 
     public function profile()
     {
