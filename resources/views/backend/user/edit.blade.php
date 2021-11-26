@@ -63,56 +63,41 @@
                             <input class="form-control" type="text" id="firstName" value="{{ $userDetail->profile->first_name }}">
                         </div>
                         <div class="form-group">
+                            <label for="firstName" class="form-control-label">First Name</label>
+                            <input class="form-control" type="text" id="firstName" value="{{ $userDetail->profile->first_name }}">
+                        </div>
+                        <div class="form-group">
                             <label for="lastName" class="form-control-label">Last Name</label>
                             <input class="form-control" type="text" id="lastName" value="{{ $userDetail->profile->last_name }}">
                         </div>
                         <div class="form-group">
-                            <label for="example-search-input" class="form-control-label">Search</label>
-                            <input class="form-control" type="search" value="Tell me your secret ..." id="example-search-input">
+                            <label for="address1" class="form-control-label">Adress 1</label>
+                            <input class="form-control" type="text" id="address1" value="{{ $userDetail->profile->address1 }}">
                         </div>
                         <div class="form-group">
-                            <label for="example-email-input" class="form-control-label">Email</label>
-                            <input class="form-control" type="email" value="@example.com" id="example-email-input">
+                            <label for="address2" class="form-control-label">Adress 2</label>
+                            <input class="form-control" type="text" id="address2" value="{{ $userDetail->profile->address2 }}">
                         </div>
                         <div class="form-group">
-                            <label for="example-url-input" class="form-control-label">URL</label>
-                            <input class="form-control" type="url" value="" id="example-url-input">
+                            <label for="district" class="form-control-label">District</label>
+                            <input class="form-control" type="text" id="district" value="{{ $userDetail->profile->district }}">
                         </div>
                         <div class="form-group">
-                            <label for="example-tel-input" class="form-control-label">Phone</label>
-                            <input class="form-control" type="tel" value="40-(770)-888-444" id="example-tel-input">
+                            <label for="province" class="form-control-label">Province</label>
+                            <input class="form-control" type="text" id="province" value="{{ $userDetail->profile->province }}">
                         </div>
                         <div class="form-group">
-                            <label for="example-password-input" class="form-control-label">Password</label>
-                            <input class="form-control" type="password" value="password" id="example-password-input">
+                            <label for="state" class="form-control-label">State</label>
+                            <input class="form-control" type="text" id="state" value="{{ $userDetail->profile->state }}">
                         </div>
+
                         <div class="form-group">
-                            <label for="example-number-input" class="form-control-label">Number</label>
-                            <input class="form-control" type="number" value="23" id="example-number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-datetime-local-input" class="form-control-label">Datetime</label>
-                            <input class="form-control" type="datetime-local" value="2018-11-23T10:30:00" id="example-datetime-local-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-date-input" class="form-control-label">Date</label>
-                            <input class="form-control" type="date" value="2018-11-23" id="example-date-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-month-input" class="form-control-label">Month</label>
-                            <input class="form-control" type="month" value="2018-11" id="example-month-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-week-input" class="form-control-label">Week</label>
-                            <input class="form-control" type="week" value="2018-W23" id="example-week-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-time-input" class="form-control-label">Time</label>
-                            <input class="form-control" type="time" value="10:30:00" id="example-time-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-color-input" class="form-control-label">Color</label>
-                            <input class="form-control" type="color" value="#5e72e4" id="example-color-input">
+                            <label for="status" class="form-control-label">Status</label>
+                            <select class="form-control" id="status">
+                                <option value="0" {{ ($userDetail->status == 0) ? 'selected': ''}}>Inactive</option>
+                                <option value="1" {{ ($userDetail->status == 1) ? 'selected': ''}}>Active</option>
+                                <option value="2" {{ ($userDetail->status == 2) ? 'selected': ''}}>Banned</option>
+                            </select>
                         </div>
                     </form>
                 </div>
