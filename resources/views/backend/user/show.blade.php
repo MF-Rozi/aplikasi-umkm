@@ -32,7 +32,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="{{ route('admin.user.edit',['slug'=> $userDetail->profile->slug]) }}" role="tab" aria-selected="false">
                                 <i class="fas fa-edit"></i>
 
                                 <span class="ms-1">Edit</span>

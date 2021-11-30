@@ -56,12 +56,8 @@
             <div class="card mb-4">
 
                 <div class="card-body pb-2">
-                    <form>
+                    <form method="post" name="profileUpdate">
                         @csrf
-                        <div class="form-group">
-                            <label for="firstName" class="form-control-label">First Name</label>
-                            <input class="form-control" type="text" id="firstName" value="{{ $userDetail->profile->first_name }}">
-                        </div>
                         <div class="form-group">
                             <label for="firstName" class="form-control-label">First Name</label>
                             <input class="form-control" type="text" id="firstName" value="{{ $userDetail->profile->first_name }}">
@@ -99,8 +95,36 @@
                                 <option value="2" {{ ($userDetail->status == 2) ? 'selected': ''}}>Banned</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="telegramID" class="form-control-label">Telegram ID</label>
+                            <input class="form-control" type="text" id="telegramID" value="{{ $userDetail->telegram_id }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-control-label">Email</label>
+                            <input class="form-control" type="email" id="email" value="{{ $userDetail->email }}">
+                        </div>
+
+                        <button class="btn btn-primary" type="submit"> Update</button>
                     </form>
                 </div>
+                <form action="post" name="passwordUpdate">
+                    <div class="card-body pb-2">
+                        <hr>
+                        <h5>Change Password</h5>
+                        <form method="post" name="passwordUpdate">
+                            @csrf
+                            <div class="form-group">
+                                <label for="newPassword" class="form-control-label">New Password</label>
+                                <input class="form-control" type="password" id="newPassword" placeholder="Enter new Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-control-label">Confirm Password</label>
+                                <input class="form-control" type="password" id="confirmPassword" placeholder="Confirm New Password">
+                            </div>
+
+                            <button class="btn btn-primary" type="submit"> Update</button>
+                        </form>
+                    </div>
             </div>
         </div>
     </div>
