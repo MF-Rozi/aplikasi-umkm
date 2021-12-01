@@ -13,7 +13,7 @@ class Profile extends Model
     use HasFactory, SoftDeletes,HasSlug;
 
 
-
+    protected $guarded = ['id'];
 
     public function getSlugOptions() : SlugOptions
     {

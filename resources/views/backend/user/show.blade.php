@@ -54,7 +54,14 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-
+                @if (session('edit'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('edit') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
                 <div class="card-body pb-2">
                     <div class="table-responsive">
                         <table class="table yajra-datatable align-item-center mb-0">
@@ -96,10 +103,7 @@
                                 <td>Phone</td>
                                 <td>{{ $userDetail->phone }}</td>
                             </tr>
-                            <tr>
-                                <td>Remember Token</td>
-                                <td>{{ $userDetail->remember_token }}</td>
-                            </tr>
+
                             <tr>
                                 <td>Telegram ID</td>
                                 <td>{{ $userDetail->telegram_id }}</td>

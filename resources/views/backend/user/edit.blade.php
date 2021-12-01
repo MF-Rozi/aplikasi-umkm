@@ -56,40 +56,46 @@
             <div class="card mb-4">
 
                 <div class="card-body pb-2">
-                    <form method="post" name="profileUpdate">
+                    <form method="POST" name="profileUpdate" action="{{ route('admin.user.update') }}">
+                        @method('put')
                         @csrf
+                        <input type="hidden" value="{{ $userDetail->profile->slug }}" name="slug">
                         <div class="form-group">
                             <label for="firstName" class="form-control-label">First Name</label>
-                            <input class="form-control" type="text" id="firstName" value="{{ $userDetail->profile->first_name }}">
+                            <input class="form-control" type="text" name="firstName" id="firstName" value="{{ $userDetail->profile->first_name }}">
                         </div>
                         <div class="form-group">
                             <label for="lastName" class="form-control-label">Last Name</label>
-                            <input class="form-control" type="text" id="lastName" value="{{ $userDetail->profile->last_name }}">
+                            <input class="form-control" type="text" id="lastName" name="lastName" value="{{ $userDetail->profile->last_name }}">
                         </div>
                         <div class="form-group">
                             <label for="address1" class="form-control-label">Adress 1</label>
-                            <input class="form-control" type="text" id="address1" value="{{ $userDetail->profile->address1 }}">
+                            <input class="form-control" type="text" id="address1" name="address1" value="{{ $userDetail->profile->address1 }}">
                         </div>
                         <div class="form-group">
                             <label for="address2" class="form-control-label">Adress 2</label>
-                            <input class="form-control" type="text" id="address2" value="{{ $userDetail->profile->address2 }}">
+                            <input class="form-control" type="text" id="address2" name="address2" value="{{ $userDetail->profile->address2 }}">
                         </div>
                         <div class="form-group">
                             <label for="district" class="form-control-label">District</label>
-                            <input class="form-control" type="text" id="district" value="{{ $userDetail->profile->district }}">
+                            <input class="form-control" type="text" id="district" name="district" value="{{ $userDetail->profile->district }}">
                         </div>
                         <div class="form-group">
                             <label for="province" class="form-control-label">Province</label>
-                            <input class="form-control" type="text" id="province" value="{{ $userDetail->profile->province }}">
+                            <input class="form-control" type="text" id="province" name="province" value="{{ $userDetail->profile->province }}">
                         </div>
                         <div class="form-group">
                             <label for="state" class="form-control-label">State</label>
-                            <input class="form-control" type="text" id="state" value="{{ $userDetail->profile->state }}">
+                            <input class="form-control" type="text" id="state" name="state" value="{{ $userDetail->profile->state }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="postCode" class="form-control-label">Post Code</label>
+                            <input class="form-control" type="text" id="postCode" name="postCode" value="{{ $userDetail->profile->post_code }}">
                         </div>
 
                         <div class="form-group">
                             <label for="status" class="form-control-label">Status</label>
-                            <select class="form-control" id="status">
+                            <select class="form-control" id="status" name="status">
                                 <option value="0" {{ ($userDetail->status == 0) ? 'selected': ''}}>Inactive</option>
                                 <option value="1" {{ ($userDetail->status == 1) ? 'selected': ''}}>Active</option>
                                 <option value="2" {{ ($userDetail->status == 2) ? 'selected': ''}}>Banned</option>
@@ -97,34 +103,34 @@
                         </div>
                         <div class="form-group">
                             <label for="telegramID" class="form-control-label">Telegram ID</label>
-                            <input class="form-control" type="text" id="telegramID" value="{{ $userDetail->telegram_id }}">
+                            <input class="form-control" type="text" id="telegramID" name="telegramID" value="{{ $userDetail->telegram_id }}">
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-control-label">Email</label>
-                            <input class="form-control" type="email" id="email" value="{{ $userDetail->email }}">
+                            <input class="form-control" type="email" id="email" name="email" value="{{ $userDetail->email }}" readonly>
                         </div>
 
                         <button class="btn btn-primary" type="submit"> Update</button>
                     </form>
                 </div>
-                <form action="post" name="passwordUpdate">
-                    <div class="card-body pb-2">
-                        <hr>
-                        <h5>Change Password</h5>
-                        <form method="post" name="passwordUpdate">
-                            @csrf
-                            <div class="form-group">
-                                <label for="newPassword" class="form-control-label">New Password</label>
-                                <input class="form-control" type="password" id="newPassword" placeholder="Enter new Password">
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmPassword" class="form-control-label">Confirm Password</label>
-                                <input class="form-control" type="password" id="confirmPassword" placeholder="Confirm New Password">
-                            </div>
+                <div class="card-body pb-2">
+                    <hr>
+                    <h5>Change Password</h5>
+                    <form method="POST" name="passwordUpdate" action="{{ route('admin.user.update.password') }}">
+                        @method('put')
+                        @csrf
+                        <div class="form-group">
+                            <label for="password" class="form-control-label">New Password</label>
+                            <input class="form-control" type="password" name="password" id="password" placeholder="Enter new Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-control-label">Confirm Password</label>
+                            <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm New Password">
+                        </div>
 
-                            <button class="btn btn-primary" type="submit"> Update</button>
-                        </form>
-                    </div>
+                        <button class="btn btn-primary" type="submit"> Update</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
