@@ -74,11 +74,11 @@ class UserController extends Controller
     }
     public function updatePassword(UserPasswordUpdateRequest $request)
     {
-        dd($request);
+        // dd($request);
         $profile = Profile::where('slug', $request->slug)->firstOrFail();
         $password = Hash::make($request->password);
         $profile->user->update(['password' => $password]);
-        return redirect(route('admin.user.show', ['slug' => $request->slug]))->with('edit', 'Edit Password Successfully!');
+        return redirect(route('admin.user.edit', ['slug' => $request->slug]))->with('updatePassword', 'Edit Password Successfully!');
     }
     public function edit($slug)
     {
