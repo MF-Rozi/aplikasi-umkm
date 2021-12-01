@@ -7,12 +7,14 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserPasswordUpdateRequest;
 use Hash;
 use Route;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\UserCreateRequest;
 
 class UserController extends Controller
 {
@@ -38,6 +40,27 @@ class UserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         // }
+    }
+    public function store(UserCreateRequest $request)
+    {
+        // dd($request);
+        $user = User::create([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'telegram_id' => $request->telegram_id,
+            'remember_token' => $request->remember_token,
+        ]);
+        $role = Role::findByName($request->role);
+        $user->assignRole($role);
+
+        return redirect(route('admin.profile.create', [$user]));
+    }
+    public function create()
+    {
+        return view('backend.user.create', [
+            'title' => 'User Create',
+        ]);
     }
     public function show($slug)
     {

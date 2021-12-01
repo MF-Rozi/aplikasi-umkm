@@ -26,20 +26,19 @@
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                            <a class="nav-link mb-0 px-0 py-1  " href="{{ route('admin.user.show',['slug'=> $userDetail->profile->slug]) }}" role="button">
                                 <i class="fas fa-info"></i>
                                 <span class="ms-1">Detail</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                            <a class="nav-link mb-0 px-0 py-1  " href="{{ route('admin.user.edit',['slug'=> $userDetail->profile->slug]) }}" role="button">
                                 <i class="fas fa-edit"></i>
-
                                 <span class="ms-1">Edit</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                            <a class="nav-link mb-0 px-0 py-1 " href="{{ route('admin.user.delete',['slug'=> $userDetail->profile->slug]) }}" role="button">
                                 <i class="fas fa-trash-alt"></i>
                                 <span class="ms-1">Delete</span>
                             </a>
