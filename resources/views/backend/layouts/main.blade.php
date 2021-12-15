@@ -61,4 +61,8 @@
 
     @include('sweetalert::alert')
 
+    @yield('script-body')
+
 </body>
+
+@yield('script-after')
