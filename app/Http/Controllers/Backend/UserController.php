@@ -33,7 +33,7 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function (User $user) {
                     $btn = '<a href="'.route('admin.user.show', ['slug' => $user->profile->slug])
-                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.user.edit', ['slug' => $user->profile->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <a href="'.route('admin.user.delete', ['slug' => $user->profile->slug]).'" class="delete btn btn-danger btn-sm">Delete</a>';
+                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.user.edit', ['slug' => $user->profile->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <a href="#" class="delete btn btn-danger btn-sm" data-id="'.$user->profile->slug.'">Delete</a>';
 
                     return $btn;
                 })
@@ -118,10 +118,5 @@ class UserController extends Controller
     {
         $profile = Profile::where('slug', $slug)->firstOrFail();
         $user = User::findOrFail($profile->user_id);
-
-        return view('backend.user.delete', [
-            'title' => 'User Detail',
-            'userDetail' => $user,
-        ]);
     }
 }

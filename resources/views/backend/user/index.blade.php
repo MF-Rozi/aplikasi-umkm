@@ -47,6 +47,10 @@
 </div>
 
 
+
+@endsection
+
+@section('script-body')
 <script type="text/javascript">
     $(function() {
 
@@ -80,6 +84,13 @@
             , ]
         });
 
+    });
+
+</script>
+
+<script>
+    $('.delete').click(function() {
+        new swal("Hello World");
     });
 
 </script>

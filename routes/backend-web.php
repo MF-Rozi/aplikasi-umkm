@@ -25,8 +25,11 @@ Route::group(['prefix' => 'admin','middleware' => ['role:super-admin|admin']], f
 
     //category
     Route::get('/categories', [CategoryController::class, 'index'])->name('admin.category.index');
+    Route::put('/categories/update', [CategoryController::class, 'update'])->name('admin.category.update');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.category.create');
+    Route::put('/categories/store', [CategoryController::class, 'store'])->name('admin.category.store');
     Route::get('/categories/index-datatable', [CategoryController::class, 'categoryListDataTable'])->name('admin.category.index.datatable');
-    Route::get('/categories/show/{slug}', [CategoryController::class, 'show'])->name('admin.category.show');
-    Route::get('/categories/edit/{slug}', [CategoryController::class, 'edit'])->name('admin.category.edit');
-    Route::get('/categories/delete/{slug}', [CategoryController::class, 'delete'])->name('admin.category.delete');
+    Route::get('/categories/{slug}/show', [CategoryController::class, 'show'])->name('admin.category.show');
+    Route::get('/categories/{slug}/edit/', [CategoryController::class, 'edit'])->name('admin.category.edit');
+    Route::get('/categories/{slug}/delete', [CategoryController::class, 'delete'])->name('admin.category.delete');
 });

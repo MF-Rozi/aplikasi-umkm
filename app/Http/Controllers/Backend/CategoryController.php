@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Auth;
 use Illuminate\Http\Request;
@@ -12,9 +14,11 @@ class CategoryController extends Controller
 {
     public function index()
     {
+
         return view('backend.category.index', [
             'title' => 'Categories Table',
             'user' => Auth::user(),
+            'categories' => Category::latest()->paginate(5),
 
         ]);
     }
@@ -34,13 +38,31 @@ class CategoryController extends Controller
                 ->make(true);
         // }
     }
+    public function create()
+    {
+        $categories = Category::all();
+        return view('backend.category.create', [
+            'title' => 'Create Category',
+            'categories' => $categories,
+        ]);
+    }
+    public function store(CreateCategoryRequest $request)
+    {
+        // dd($request);
+        $newCategory = Category::create([
+            'name' => $request->name,
+            'parent' => $request->parent,
+        ]);
+        // dd($newCategory);
+        return redirect(route('admin.category.index'))->with("success", 'Category Baru '.$newCategory->name.' Berhasil Ditambahkan');
+    }
     public function show($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
 
 
         return view('backend.category.show', [
-            'title' => 'User Detail',
+            'title' => 'Category Detail',
             'user' => Auth::user(),
             'categoryDetail' => $category,
         ]);
@@ -48,12 +70,24 @@ class CategoryController extends Controller
     public function edit($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
+        $categories = Category::all();
 
-
-        return view('backend.category.show', [
-            'title' => 'User Detail',
+        return view('backend.category.edit', [
+            'title' => 'Category Edit',
             'user' => Auth::user(),
             'categoryDetail' => $category,
+            'categories' => $categories
+        ]);
+    }
+    public function update(UpdateCategoryRequest $request)
+    {
+        // dd($request);
+        $category = Category::find($request->id);
+        // dd($category);
+        $category->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'parent' => $request->parent,
         ]);
     }
     public function delete($slug)
