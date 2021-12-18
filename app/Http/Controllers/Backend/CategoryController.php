@@ -18,7 +18,7 @@ class CategoryController extends Controller
         return view('backend.category.index', [
             'title' => 'Categories Table',
             'user' => Auth::user(),
-            'categories' => Category::latest()->paginate(5),
+            'categories' => Category::latest()->paginate(3),
 
         ]);
     }
