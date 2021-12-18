@@ -12,6 +12,8 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes,HasSlug;
 
+    protected $guarded = ['id'];
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
