@@ -88,9 +88,11 @@
 
 </script>
 
-<script>
-    $('.delete').click(function() {
-        new swal("Hello World");
+<script type="text/javascript">
+    $(function() {
+        $('.delete').on('click', function() {
+            new swal("Hello World");
+        })
     });
 
 </script>

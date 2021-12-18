@@ -4,7 +4,10 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductPictureController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Models\ProductPicture;
 
 Route::group(['prefix' => 'admin','middleware' => ['role:super-admin|admin']], function () {
     //user
@@ -20,8 +23,8 @@ Route::group(['prefix' => 'admin','middleware' => ['role:super-admin|admin']], f
     Route::put('/users/store', [UserController::class, 'store'])->name('admin.user.store');
 
     //profile
-    Route::get('/profile/create/{id}', [ProfileController::class, 'create'])->name('admin.profile.create');
-    Route::put('/profile/store', [ProfileController::class, 'store'])->name('admin.profile.store');
+    Route::get('/profiles/create/{id}', [ProfileController::class, 'create'])->name('admin.profile.create');
+    Route::put('/profiles/store', [ProfileController::class, 'store'])->name('admin.profile.store');
 
     //category
     Route::get('/categories', [CategoryController::class, 'index'])->name('admin.category.index');
@@ -32,4 +35,18 @@ Route::group(['prefix' => 'admin','middleware' => ['role:super-admin|admin']], f
     Route::get('/categories/{slug}/show', [CategoryController::class, 'show'])->name('admin.category.show');
     Route::get('/categories/{slug}/edit/', [CategoryController::class, 'edit'])->name('admin.category.edit');
     Route::get('/categories/{slug}/delete', [CategoryController::class, 'delete'])->name('admin.category.delete');
+
+    //product
+    Route::get('/products', [ProductController::class, 'index'])->name('admin.product.index');
+    Route::put('/producs/update', [ProductController::class, 'update'])->name('admin.product.update');
+    Route::get('/producs/create', [ProductController::class, 'create'])->name('admin.product.create');
+    Route::put('/producs/store', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::get('/producs/index-datatable', [ProductController::class, 'productListDataTable'])->name('admin.product.index.datatable');
+    Route::get('/producs/{slug}/show', [ProductController::class, 'show'])->name('admin.product.show');
+    Route::get('/producs/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
+    Route::get('/producs/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
+
+    //product Pictures
+    Route::get('/productPictures/create/{id}', [ProductPictureController::class, 'create'])->name('admin.product.picture.create');
+    Route::put('/productPictures/store', [ProductPictureController::class, 'store'])->name('admin.product.picture.store');
 });
