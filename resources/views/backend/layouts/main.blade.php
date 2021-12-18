@@ -59,5 +59,10 @@
 
     <script src="{{asset('backend/assets/js/soft-ui-dashboard.min.js?v=1.0.3')}}"></script>
 
+    @include('sweetalert::alert')
+
+    @yield('script-body')
 
 </body>
+
+@yield('script-after')

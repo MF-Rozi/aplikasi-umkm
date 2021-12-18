@@ -6,8 +6,21 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header pb-0">
-                    <h6>Users</h6>
+                @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+                <div class="d-flex d-flex justify-content-between">
+                    <div class="card-header pb-0">
+                        <h6>Users</h6>
+                    </div>
+                    <div class="card-header pb-0">
+                        <a href="{{ route('admin.user.create') }}" class="btn btn-success">Create User</a>
+                    </div>
                 </div>
                 <div class="card-body pb-2">
                     <div class="table-responsive">
@@ -34,6 +47,10 @@
 </div>
 
 
+
+@endsection
+
+@section('script-body')
 <script type="text/javascript">
     $(function() {
 
@@ -67,6 +84,15 @@
             , ]
         });
 
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $('.delete').on('click', function() {
+            new swal("Hello World");
+        })
     });
 
 </script>

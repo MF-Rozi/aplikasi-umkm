@@ -12,6 +12,8 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes,HasSlug;
 
+    protected $guarded = ['id'];
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
@@ -19,7 +21,15 @@ class Category extends Model
             ->saveSlugsTo('slug');
     }
 
-
+    public function getParentNameAttribute()
+    {
+        if ($this->parent === null) {
+            return 'null';
+        } else {
+            $parent = Category::find($this->parent);
+            return $parent->name;
+        }
+    }
     public function product()
     {
         return $this->hasMany(Product::class);

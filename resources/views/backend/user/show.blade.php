@@ -9,7 +9,7 @@
         <div class="row gx-4">
             <div class="col-auto">
                 <div class="avatar avatar-xl position-relative">
-                    <img src="{{ asset("storage/users/image/{$userDetail->profile->photo_profile}"); }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    <img src="{{ asset("storage/image/users/{$userDetail->profile->photo_profile}"); }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                 </div>
             </div>
             <div class="col-auto my-auto">
@@ -26,20 +26,19 @@
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                            <a class="nav-link mb-0 px-0 py-1  " href="{{ route('admin.user.show',['slug'=> $userDetail->profile->slug]) }}" role="button">
                                 <i class="fas fa-info"></i>
                                 <span class="ms-1">Detail</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                            <a class="nav-link mb-0 px-0 py-1 " href="{{ route('admin.user.edit',['slug'=> $userDetail->profile->slug]) }}" role="button">
                                 <i class="fas fa-edit"></i>
-
                                 <span class="ms-1">Edit</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                            <a class="nav-link mb-0 px-0 py-1 " href="{{ route('admin.user.delete',['slug'=> $userDetail->profile->slug]) }}" role="button">
                                 <i class="fas fa-trash-alt"></i>
                                 <span class="ms-1">Delete</span>
                             </a>
@@ -54,7 +53,14 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-
+                @if (session('edit'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('edit') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
                 <div class="card-body pb-2">
                     <div class="table-responsive">
                         <table class="table yajra-datatable align-item-center mb-0">
@@ -96,10 +102,7 @@
                                 <td>Phone</td>
                                 <td>{{ $userDetail->phone }}</td>
                             </tr>
-                            <tr>
-                                <td>Remember Token</td>
-                                <td>{{ $userDetail->remember_token }}</td>
-                            </tr>
+
                             <tr>
                                 <td>Telegram ID</td>
                                 <td>{{ $userDetail->telegram_id }}</td>
