@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ShopController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,3 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('frontend.home.index');
 Route::get('/about', [HomeController::class, 'about'])->name('frontend.home.about');
 Route::get('/404', [HomeController::class, 'notFound'])->name('frontend.home.404');
 Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.home.contact');
+
+Route::group(['prefix' => 'shop'], function () {
+    Route::get('/', [ShopController::class, 'index'])->name('frontend.shop.index');
+});
