@@ -8,7 +8,7 @@
 
     <!-- title -->
     <title>Fruitkha</title>
-    div.card
+
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('frontend/assets/img/favicon.png') }}">
     <!-- google font -->
