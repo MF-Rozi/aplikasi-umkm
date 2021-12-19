@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body pb-2">
                     <div class="table-responsive">
-                        <table class="table yajra-datatable align-item-center mb-0" id="user-table">
+                        <table class="table yajra-datatable align-item-center mb-0" id="datatable">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -95,42 +95,4 @@
 
 </script>
 
-<script type="text/javascript">
-    $(function() {
-      $("#user-table").on('click','.delete', function (){
-         $(this).each(function(){
-             const data = $(this).data('route');
-             console.log(data);
-             new swal({
-                 title: "Confirmation",
-                 text: "Are you sure to delete this data?",
-                 type: "warning",
-                 showCancelButton: true,
-               //  confirmButtonClass: 'btn btn-danger mt-2',
-                // cancelButtonClass: 'btn btn-outliine mt-2',
-                // cancelButtonText: "Cancel",
-
-
-             }).then(() =>{
-                 $.ajax({
-                     headers: {
-                         'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-                     },
-                     type: 'DELETE',
-                     url: data,
-                     success: (success) => {
-                        window.location.href = success;
-                         console.log(success);
-                     },
-                     error: (error) => {
-                         console.log(error);
-                     }
-                 });
-             });
-
-         });
-      });
-    });
-
-</script>
 @endsection

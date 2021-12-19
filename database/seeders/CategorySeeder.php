@@ -15,23 +15,23 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Category::create([
-            'name'=> 'Foods',
+            'name' => 'Foods',
         ]);
         Category::create([
-            'name'=> 'Desserts',
-            'parent' => 1
+            'name' => 'Desserts',
+            'parent_id' => 1
         ]);
         Category::create([
-            'name'=> 'Drinks',
+            'name' => 'Drinks',
 
         ]);
         Category::create([
-            'name'=> 'Cold Drinks',
-            'parent' => 3
+            'name' => 'Cold Drinks',
+            'parent_id' => 3
         ]);
         Category::create([
-            'name'=> 'Hot Drinks',
-            'parent' => 3
+            'name' => 'Hot Drinks',
+            'parent_id' => 3
         ]);
     }
 }

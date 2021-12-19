@@ -25,17 +25,17 @@ class CategoryController extends Controller
     public function categoryListDataTable(Request $request)
     {
         // if ($request->ajax()) {
-            $data = Category::latest()->get();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function (Category $category) {
-                    $btn = '<a href="'.route('admin.category.show', ['slug' => $category->slug])
-                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.category.edit', ['slug' => $category->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <button class="delete btn btn-danger btn-sm" data-route="'.route('admin.category.delete', ['slug' => $category->slug]).'">Delete</button>';
+        $data = Category::latest()->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function (Category $category) {
+                $btn = '<a href="' . route('admin.category.show', ['slug' => $category->slug])
+                    . '" class="detail btn btn-info btn-sm">detail</a> <a href="' . route('admin.category.edit', ['slug' => $category->slug]) . '" class="edit btn btn-warning btn-sm">Edit</a> <button class="delete btn btn-danger btn-sm" data-route="' . route('admin.category.delete', ['slug' => $category->slug]) . '">Delete</button>';
 
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         // }
     }
     public function create()
@@ -48,13 +48,12 @@ class CategoryController extends Controller
     }
     public function store(CreateCategoryRequest $request)
     {
-        // dd($request);
+        $parent = Category::find($request->parent);
         $newCategory = Category::create([
             'name' => $request->name,
             'parent' => $request->parent,
-        ]);
-        // dd($newCategory);
-        return redirect(route('admin.category.index'))->with("success", 'Category Baru '.$newCategory->name.' Berhasil Ditambahkan');
+        ], $parent);
+        return redirect(route('admin.category.index'))->with("success", 'Category Baru ' . $newCategory->name . ' Berhasil Ditambahkan');
     }
     public function show($slug)
     {

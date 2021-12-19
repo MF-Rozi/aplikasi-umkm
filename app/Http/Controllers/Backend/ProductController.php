@@ -22,18 +22,18 @@ class ProductController extends Controller
     public function productListDataTable(Request $request)
     {
         // if ($request->ajax()) {
-            $data = Product::latest()->get();
-            // dd($data);
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function (Product $product) {
-                    $btn = '<a href="'.route('admin.product.show', ['slug' => $product->slug])
-                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.product.edit', ['slug' => $product->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <a href="#" class="delete btn btn-danger btn-sm" data-id="'.$product->slug.'">Delete</a>';
+        $data = Product::latest()->get();
+        // dd($data);
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function (Product $product) {
+                $btn = '<a href="' . route('admin.product.show', ['slug' => $product->slug])
+                    . '" class="detail btn btn-info btn-sm">detail</a> <a href="' . route('admin.product.edit', ['slug' => $product->slug]) . '" class="edit btn btn-warning btn-sm">Edit</a> <button class="delete btn btn-danger btn-sm" data-route="' . route('admin.product.delete', ['slug' => $product->slug]) . '">Delete</button>';
 
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         // }
     }
     public function store(ProductCreateRequest $request)

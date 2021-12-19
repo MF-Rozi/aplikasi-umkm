@@ -10,11 +10,11 @@ use Spatie\Sluggable\SlugOptions;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes,HasSlug;
+    use HasFactory, SoftDeletes, HasSlug;
 
     protected $guarded = ['id'];
 
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -29,6 +29,6 @@ class Product extends Model
     }
     public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 }
