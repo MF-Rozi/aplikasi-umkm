@@ -42,13 +42,13 @@ Route::group(['prefix' => 'admin','middleware' => ['role:super-admin|admin']], f
 
     //product
     Route::get('/products', [ProductController::class, 'index'])->name('admin.product.index');
-    Route::put('/producs/update', [ProductController::class, 'update'])->name('admin.product.update');
-    Route::get('/producs/create', [ProductController::class, 'create'])->name('admin.product.create');
-    Route::put('/producs/store', [ProductController::class, 'store'])->name('admin.product.store');
-    Route::get('/producs/index-datatable', [ProductController::class, 'productListDataTable'])->name('admin.product.index.datatable');
-    Route::get('/producs/{slug}/show', [ProductController::class, 'show'])->name('admin.product.show');
-    Route::get('/producs/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
-    Route::get('/producs/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
+    Route::put('/products/update', [ProductController::class, 'update'])->name('admin.product.update');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('admin.product.create');
+    Route::put('/products/store', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::get('/products/index-datatable', [ProductController::class, 'productListDataTable'])->name('admin.product.index.datatable');
+    Route::get('/products/{slug}/show', [ProductController::class, 'show'])->name('admin.product.show');
+    Route::get('/products/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
+    Route::get('/products/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
 
     //product Pictures
     Route::get('/productPictures/create/{id}', [ProductPictureController::class, 'create'])->name('admin.product.picture.create');

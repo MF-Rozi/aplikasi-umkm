@@ -30,7 +30,7 @@ class CategoryController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function (Category $category) {
                     $btn = '<a href="'.route('admin.category.show', ['slug' => $category->slug])
-                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.category.edit', ['slug' => $category->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <a href="'.route('admin.category.delete', ['slug' => $category->slug]).'" class="delete btn btn-danger btn-sm">Delete</a>';
+                    .'" class="detail btn btn-info btn-sm">detail</a> <a href="'.route('admin.category.edit', ['slug' => $category->slug]).'" class="edit btn btn-warning btn-sm">Edit</a> <button class="delete btn btn-danger btn-sm" data-route="'.route('admin.category.delete', ['slug' => $category->slug]).'">Delete</button>';
 
                     return $btn;
                 })

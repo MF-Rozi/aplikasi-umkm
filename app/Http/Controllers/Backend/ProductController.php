@@ -23,6 +23,7 @@ class ProductController extends Controller
     {
         // if ($request->ajax()) {
             $data = Product::latest()->get();
+            // dd($data);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function (Product $product) {

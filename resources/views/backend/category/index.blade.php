@@ -20,7 +20,6 @@
                             <thead>
                                 <tr>
                                     <th>no</th>
-                                    <th>id</th>
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Parent</th>
@@ -28,25 +27,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $no = 1?>
-                                @foreach ($categories as $category)
-                                <tr>
-                                    <th>{{ $no }}</th>
-                                    <th>{{ $category->id }}</th>
-                                    <th>{{ $category->name }}</th>
-                                    <th>{{ $category->slug }}</th>
-                                    <th>{{ $category->parent }}</th>
-                                    <th>
-                                        <a href="{{ route('admin.category.show', ['slug' => $category->slug]) }}" class="detail btn btn-info btn-sm">detail</a> <a href="{{ route('admin.category.edit', ['slug' => $category->slug]) }}" class="edit btn btn-warning btn-sm">Edit</a> <a href="{{ route('admin.category.delete', ['slug' => $category->slug]) }}" class="delete btn btn-danger btn-sm">Delete</a>
-                                    </th>
-                                </tr>
 
-                                <?php $no += 1?>
-                                @endforeach
 
                             </tbody>
                         </table>
-                        {{ $categories->links() }}
+
 
                     </div>
                 </div>
@@ -55,7 +40,40 @@
     </div>
 </div>
 
+@endsection
 
+@section('script-body')
+<script type="text/javascript">
+    $(function() {
+        var table = $('.yajra-datatable').DataTable({
+            processing: true
+            , serverSide: true
+            , ajax: "{{ route('admin.category.index.datatable') }}"
+            , columns: [{
+                    data: 'DT_RowIndex'
+                    , name: 'DT_RowIndex'
+                }
+                , {
+                    data: 'name'
+                    , name: 'name'
+                }
+                , {
+                    data: 'slug'
+                    , name: 'slug'
+                }
+                , {
+                    data: 'parent'
+                    , name: 'parent'
+                }
+                , {
+                    data: 'action'
+                    , name: 'action'
+                    , orderable: true
+                    , searchable: true
+                }
+            , ]
+        });
+    });
 
-
+</script>
 @endsection
