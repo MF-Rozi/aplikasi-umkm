@@ -14,11 +14,6 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::create([
-            'name'=>"Kopi",
-            'price'=>5000,
-            'stock'=>100,
-            'code'=>'D-K-1',
-        ]);
+
     }
 }
