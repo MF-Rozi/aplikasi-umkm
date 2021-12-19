@@ -11,20 +11,20 @@
                 <div class="card mb-4">
                     <div class="d-flex d-flex justify-content-between">
                         <div class="card-header pb-0">
-                            <h6>Producs</h6>
+                            <h6>Products</h6>
                         </div>
                         <div class="card-header pb-0">
                             <a href="{{ route('admin.product.create') }}" class="btn btn-success">Create Product</a>
                         </div>
                     </div>
-                    <div class="card-body pb-2">
+                    <div class="card-body mb-2">
                         <div class="table-responsive">
-                            <table id="datatable" class="table yajra-datatable align-item-center mb-0">
+                            <table id="datatable" class="table yajra-datatable align-item-center mb-0 text-center">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
-                                        <th>Slug</th>
+                                        <th>Price</th>
                                         <th>Stock</th>
                                         <th>Code</th>
                                         <th>Action</th>
@@ -51,6 +51,7 @@
                 serverSide: true,
                 ajax: "{{ route('admin.product.index.datatable') }}",
                 language: {
+                    //url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json',
                     paginate: {
                         next: "&gt;",
                         previous: "&lt;"
@@ -65,8 +66,9 @@
                         name: 'name'
                     },
                     {
-                        data: 'slug',
-                        name: 'slug'
+                        data: 'price',
+                        name: 'price',
+                        type: 'num-fmt'
                     },
                     {
                         data: 'stock',

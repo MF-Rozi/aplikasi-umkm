@@ -44,16 +44,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
 
 
     //product
-    Route::get('/products', [ProductController::class, 'index'])->name('admin.product.index');
-    Route::put('/products/update', [ProductController::class, 'update'])->name('admin.product.update');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('admin.product.create');
-    Route::post('/products/store', [ProductController::class, 'store'])->name('admin.product.store');
-    Route::get('/products/index-datatable', [ProductController::class, 'productListDataTable'])->name('admin.product.index.datatable');
-    Route::get('/products/{slug}/show', [ProductController::class, 'show'])->name('admin.product.show');
-    Route::get('/products/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
-    Route::delete('/products/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
-
-    //product Pictures
-    Route::get('/productPictures/create/{id}', [ProductPictureController::class, 'create'])->name('admin.product.picture.create');
-    Route::put('/productPictures/store', [ProductPictureController::class, 'store'])->name('admin.product.picture.store');
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('admin.product.index');
+        Route::put('/update/{slug}', [ProductController::class, 'update'])->name('admin.product.update');
+        Route::get('/create', [ProductController::class, 'create'])->name('admin.product.create');
+        Route::post('/store', [ProductController::class, 'store'])->name('admin.product.store');
+        Route::get('/index-datatable', [ProductController::class, 'productListDataTable'])->name('admin.product.index.datatable');
+        Route::get('/{slug}/show', [ProductController::class, 'show'])->name('admin.product.show');
+        Route::get('/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::delete('/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
+        Route::post('/product/upload/picture', [ProductController::class, 'uploadPicture'])->name('admin.product.upload.picture');
+    });
 });

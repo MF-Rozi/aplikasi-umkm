@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, HasSlug;
+    use HasFactory, SoftDeletes, HasSlug, InteractsWithMedia;
+
 
     protected $guarded = ['id'];
 
@@ -21,14 +24,13 @@ class Product extends Model
             ->saveSlugsTo('slug');
     }
 
-
-
-    public function pictures()
-    {
-        return $this->hasMany(ProductPicture::class);
-    }
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function pictures()
+    {
+        return $this->getMedia('picture');
     }
 }

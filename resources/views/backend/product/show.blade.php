@@ -22,6 +22,14 @@
                                 <td>Price</td>
                                 <td>Rp. {{ number_format($productDetail->price,2,',','.') }}</td>
                             </tr>
+                            <tr>
+                                <td>Picture</td>
+                                <td>
+                                    @foreach ( $pictures as $picture )
+                                        {{$picture}}
+                                    @endforeach
+                                </td>
+                            </tr>
 
 
                         </table>
