@@ -7,7 +7,7 @@
     <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
     <!-- title -->
-    <title>Fruitkha</title>
+    <title>UMKM A</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('frontend/assets/img/favicon.png') }}">
@@ -49,6 +49,9 @@
     <!--Content -->
     @yield('content')
     <!-- end Content -->
+    <!-- logo carousel -->
+    @include('frontend.layouts.partials.logo-carousel')
+    <!-- end logo carousel -->
     <!-- footer -->
     @include('frontend.layouts.partials.footer')
     <!-- end footer -->

@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('frontend.index');
+Route::get('/', [HomeController::class, 'index'])->name('frontend.home.index');
+Route::get('/about', [HomeController::class, 'about'])->name('frontend.home.about');
+Route::get('/404', [HomeController::class, 'notFound'])->name('frontend.home.404');
+Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.home.contact');
