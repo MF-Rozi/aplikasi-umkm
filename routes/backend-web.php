@@ -22,7 +22,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
         Route::put('/update', [UserController::class, 'update'])->name('admin.user.update');
         Route::put('/passwordUpdate', [UserController::class, 'updatePassword'])->name('admin.user.update.password');
         Route::get('/create', [UserController::class, 'create'])->name('admin.user.create');
-        Route::put('/store', [UserController::class, 'store'])->name('admin.user.store');
+        Route::post('/store', [UserController::class, 'store'])->name('admin.user.store');
     });
 
 
@@ -35,11 +35,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
         Route::get('/', [CategoryController::class, 'index'])->name('admin.category.index');
         Route::put('/update', [CategoryController::class, 'update'])->name('admin.category.update');
         Route::get('/create', [CategoryController::class, 'create'])->name('admin.category.create');
-        Route::put('/store', [CategoryController::class, 'store'])->name('admin.category.store');
+        Route::post('/store', [CategoryController::class, 'store'])->name('admin.category.store');
         Route::get('/index-datatable', [CategoryController::class, 'categoryListDataTable'])->name('admin.category.index.datatable');
         Route::get('/{slug}/show', [CategoryController::class, 'show'])->name('admin.category.show');
         Route::get('/{slug}/edit/', [CategoryController::class, 'edit'])->name('admin.category.edit');
-        Route::get('/{slug}/delete', [CategoryController::class, 'delete'])->name('admin.category.delete');
+        Route::delete('/{slug}/delete', [CategoryController::class, 'delete'])->name('admin.category.delete');
     });
 
 
@@ -47,11 +47,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
     Route::get('/products', [ProductController::class, 'index'])->name('admin.product.index');
     Route::put('/products/update', [ProductController::class, 'update'])->name('admin.product.update');
     Route::get('/products/create', [ProductController::class, 'create'])->name('admin.product.create');
-    Route::put('/products/store', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::post('/products/store', [ProductController::class, 'store'])->name('admin.product.store');
     Route::get('/products/index-datatable', [ProductController::class, 'productListDataTable'])->name('admin.product.index.datatable');
     Route::get('/products/{slug}/show', [ProductController::class, 'show'])->name('admin.product.show');
     Route::get('/products/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
-    Route::get('/products/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
+    Route::delete('/products/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
 
     //product Pictures
     Route::get('/productPictures/create/{id}', [ProductPictureController::class, 'create'])->name('admin.product.picture.create');

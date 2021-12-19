@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body pb-2">
                         <div class="table-responsive">
-                            <table class="table yajra-datatable align-item-center mb-0">
+                            <table id="datatable" class="table yajra-datatable align-item-center mb-0">
                                 <thead>
                                     <tr>
                                         <th>no</th>

@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     <div class="card-body pb-2">
-                        <h5>{{ $categoryDetail->name }}</h5>
+                        <h5 class="card-title">{{ $categoryDetail->name }}</h5>
                         <hr>
                         <div class="table-responsive">
                             <table class="table align-item-center mb-0">
@@ -28,7 +28,7 @@
                                 </tr>
                                 <tr>
                                     <td>Parent Category</td>
-                                    <td>{{ $categoryDetail->parent->name }}</td>
+                                    <td>{{ empty($categoryDetail->parent) ? 'None' : $categoryDetail->parent->name }}</td>
                                 </tr>
 
 

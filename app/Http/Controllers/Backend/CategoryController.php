@@ -92,12 +92,11 @@ class CategoryController extends Controller
     public function delete($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
+        $name = $category->name;
+        $category->delete();
 
+        alert()->success('Category Deleted!', $name . ' is Deleted successfully.');
 
-        return view('backend.category.show', [
-            'title' => 'Category Detail',
-            'user' => Auth::user(),
-            'categoryDetail' => $category,
-        ]);
+        return response(route('admin.category.index'));
     }
 }
