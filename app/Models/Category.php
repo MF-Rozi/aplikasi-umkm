@@ -31,7 +31,7 @@ class Category extends Model
             return $parent->name;
         }
     }
-    public function product()
+    public function products()
     {
         return $this->belongsToMany(Product::class);
     }

@@ -50,11 +50,13 @@
                             is-invalid
                         @enderror"
                                     id="parent" name="parent">
+
                                     <option value="" {{ $categoryDetail->parent == null ? 'selected' : '' }}>Null (Doesn't
                                         Have Parent)</option>
                                     @foreach ($categories as $cat)
                                         <option value="{{ $cat->id }}"
-                                            {{ $categoryDetail->parent->id == $cat->id ? 'selected' : '' }}>
+                                            {{ $categoryDetail->parent == null ? '':( $categoryDetail->parent->id == $cat->id ? 'selected' : '') }}>
+
                                             {{ $cat->name }}</option>
                                     @endforeach
 
