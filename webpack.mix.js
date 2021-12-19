@@ -21,3 +21,8 @@ mix.styles(
 );
 mix.copyDirectory("resources/backend/js", "public/backend/assets/js");
 mix.js("resources/backend/js/backend-bootstrap.js", "public/backend/assets/js/backend.js");
+mix.copyDirectory("resources/frontend/bootstrap","public/frontend/assets/bootstrap");
+mix.copyDirectory("resources/frontend/css","public/frontend/assets/css");
+mix.copyDirectory("resources/frontend/img","public/frontend/assets/img");
+mix.copyDirectory("resources/frontend/js","public/frontend/assets/js");
+mix.copyDirectory("resources/frontend/webfonts","public/frontend/assets/webfonts");
