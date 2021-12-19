@@ -106,15 +106,14 @@
       $('form').find('input[name="productPicture[]"][value="' + name + '"]').remove()
     }
     , init: function() {
-      @if(isset($project) && $project->document)
-      var files = {
-        !!json_encode($project->document) !!
-      }
+      @if(isset($productDetail) && $productDetail->pictures())
+      var files = {!! json_encode($productDetail->pictures()) !!}
       for (var i in files) {
         var file = files[i]
         this.options.addedfile.call(this, file)
+        this.options.thumbnail.call(this, file, file.original_url)
         file.previewElement.classList.add('dz-complete')
-        $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+        $('form').append('<input type="hidden" name="productPicture[]" value="' + file.file_name + '">')
       }
       @endif
     }
@@ -122,4 +121,5 @@
   }
 
 </script>
+
 @endsection
