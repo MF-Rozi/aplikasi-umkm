@@ -20,4 +20,14 @@ class ShopController extends Controller
 
         ]);
     }
+    public function detail($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        $category = $product->categories->first();
+
+        return view('frontend.shop.single-product', [
+            'productDetail' => $product,
+            'category' => $category,
+        ]);
+    }
 }

@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/home', function () {
+    return redirect(route('frontend.home.index'));
+});
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home.index');
 Route::get('/about', [HomeController::class, 'about'])->name('frontend.home.about');
 Route::get('/404', [HomeController::class, 'notFound'])->name('frontend.home.404');
@@ -23,4 +25,5 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.home.
 
 Route::group(['prefix' => 'shop'], function () {
     Route::get('/', [ShopController::class, 'index'])->name('frontend.shop.index');
+    Route::get('/{slug}/detail', [ShopController::class, 'detail'])->name('frontend.shop.single-product');
 });
