@@ -125,7 +125,7 @@ class ProductController extends Controller
         $product->delete();
 
         alert()->success('Deleted', 'Product deleted successfully.');
-        return redirect()->route('admin.product.index');
+        return response(route('admin.product.index'));
     }
 
     public function uploadPicture(Request $request)
