@@ -54,5 +54,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
         Route::get('/{slug}/edit/', [ProductController::class, 'edit'])->name('admin.product.edit');
         Route::delete('/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
         Route::post('/product/upload/picture', [ProductController::class, 'uploadPicture'])->name('admin.product.upload.picture');
+        Route::post('/product/picture/delete/{id}', [ProductController::class, 'deletePicture'])->name('admin.product.picture.delete');
     });
 });

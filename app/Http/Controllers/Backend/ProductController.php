@@ -88,13 +88,13 @@ class ProductController extends Controller
         $product->categories()->sync($request->category);
 
 
-        // if (count($product->pictures()) > 0) {
-        //     foreach ($product->pictures() as $media) {
-        //         if (!in_array($media->file_name, $request->input('uploadPicture', []))) {
-        //             $media->delete();
-        //         }
-        //     }
-        // }
+        if (count($product->pictures()) > 0) {
+            foreach ($product->pictures() as $media) {
+                if (!in_array($media->file_name, $request->input('productPicture', []))) {
+                    $media->delete();
+                }
+            }
+        }
 
         $media = $product->pictures()->pluck('file_name')->toArray();
 
@@ -122,6 +122,10 @@ class ProductController extends Controller
     public function delete($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
+        $product->delete();
+
+        alert()->success('Deleted', 'Product deleted successfully.');
+        return redirect()->route('admin.product.index');
     }
 
     public function uploadPicture(Request $request)
