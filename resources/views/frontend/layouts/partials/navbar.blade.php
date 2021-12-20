@@ -36,9 +36,8 @@
                                 </ul>
                             </li> --}}
                             <li><a href="{{ route('frontend.home.contact') }}">Contact</a></li>
-                            <li><a href="shop.html">Shop</a>
+                            <li><a href="{{ route('frontend.shop.index') }}">Shop</a>
                                 <ul class="sub-menu">
-                                    <li><a href="shop.html">Shop</a></li>
                                     <li><a href="checkout.html">Check Out</a></li>
                                     <li><a href="single-product.html">Single Product</a></li>
                                     <li><a href="cart.html">Cart</a></li>
@@ -46,14 +45,34 @@
                             </li>
                             <li>
                                 <div class="header-icons">
+                                    @if(!empty(Auth::user()))
+                                    <a href="">{{ Auth::user()->email }}</a>
+                                    <a href="">
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button class="btn ">
+                                                <i class="fas fa-sign-out-alt  white" style="color: white"></i>
+                                            </button>
+                                        </form>
+                                    </a>
+                                    @if(Auth::user()->hasRole(['admin','super-admin']))
+                                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                    @endif
+
+                                    @else
+                                    <a href="{{ route('login') }}">Login</a>
+                                    @endif
                                     <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
                                     <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+
+
                                 </div>
                             </li>
                         </ul>
                     </nav>
                     <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                     <div class="mobile-menu"></div>
+
                     <!-- menu end -->
                 </div>
             </div>
