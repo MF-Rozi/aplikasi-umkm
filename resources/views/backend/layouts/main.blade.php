@@ -21,9 +21,27 @@
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
     <!-- Data Tables -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/datatables.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    {{-- pusher --}}
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('{{ config('
+            broadcasting.connections.pusher.key ') }}', {
+                cluster: '{{ config('
+                broadcasting.connections.pusher.options.cluster ') }}'
+            });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+
+    </script>
 
     <script type=" text/javascript" src="{{ asset('backend/assets/js/backend.js') }}"></script>
 </head>
@@ -64,6 +82,7 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
+
     </script>
 
     <script src="{{ asset('backend/assets/js/soft-ui-dashboard.min.js?v=1.0.3') }}"></script>
@@ -78,14 +97,14 @@
                     const data = $(this).data('route');
                     console.log(data);
                     Swal.fire({
-                        title: "Confirmation",
-                        text: "Are you sure to delete this data?",
-                        type: "warning",
-                        showCancelButton: true,
-                        showClass: {
+                        title: "Confirmation"
+                        , text: "Are you sure to delete this data?"
+                        , type: "warning"
+                        , showCancelButton: true
+                        , showClass: {
                             popup: 'animate__animated animate__fadeInDown'
-                        },
-                        hideClass: {
+                        }
+                        , hideClass: {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
                         //  confirmButtonClass: 'btn btn-danger mt-2',
@@ -99,14 +118,14 @@
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr(
                                         'content')
-                                },
-                                type: 'DELETE',
-                                url: data,
-                                success: (success) => {
+                                }
+                                , type: 'DELETE'
+                                , url: data
+                                , success: (success) => {
                                     window.location.href = success;
                                     console.log(success);
-                                },
-                                error: (error) => {
+                                }
+                                , error: (error) => {
                                     console.log(error);
                                 }
                             });
@@ -117,6 +136,7 @@
                 });
             });
         });
+
     </script>
 
 </body>
