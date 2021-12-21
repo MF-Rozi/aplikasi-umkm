@@ -41,8 +41,8 @@
             <div class="col-lg-4 col-md-6 text-center {{ empty($product->categories[0]->slug) ? '' : $product->categories[0]->slug }}">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="single-product.html"></a>
-                        <img src=" {{ $product->pictures()->first()->getUrl() }} " alt="{{ $product->pictures()->first()->name }}" height="200px">
+                        <a href="{{ route('frontend.shop.single-product',['slug'=> $product->slug]) }}"><img src=" {{ $product->pictures()->first()->getUrl() }} " alt="{{ $product->pictures()->first()->name }}" height="200px"></a>
+
                     </div>
                     <h3>{{ $product->name }}</h3>
                     <p class="product-price"> Rp {{ number_format($product->price,0,',','.') }} </p>
