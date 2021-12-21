@@ -17,13 +17,13 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('code');
-            $table->string('grand_total');
+            $table->bigInteger('grand_total');
             $table->string('status');
-            $table->string('payment_token');
-            $table->string('payment_url');
-            $table->string('note'); // text atau string?
+            $table->string('payment_token')->nullable();
+            $table->string('payment_url')->nullable();
+            $table->string('note')->nullable(); // text atau string?
             $table->timestamp('cencelation_at');
-            $table->string('cancelation_note'); // text atau string?
+            $table->string('cancelation_note')->nullable(); // text atau string?
             $table->timestamps();
             $table->softDeletes();
 

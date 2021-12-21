@@ -20,7 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->double('tax');
             $table->string('payment_method');
             $table->string('status');
-            $table->text('full_adress');
+            $table->text('full_address');
             $table->timestamps();
             $table->softDeletes();
 

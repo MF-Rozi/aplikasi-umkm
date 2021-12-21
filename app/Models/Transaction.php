@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,12 +11,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Transaction extends Model
 {
 
-    const TRANSACTION_STATUS_RECEIVED = 'received';
-    const TRANSACTION_STATUS_PAID = 'paid';
-    const TRANSACTION_STATUS_ON_PROCESS = 'on-process';
-    const TRANSACTION_STATUS_DELIVERY = 'delivery';
-    const TRANSACTION_STATUS_DONE = 'done';
-    const TRANSACTION_STATUS_CANCELLED = 'cancelled';
+    const PAYMENT_STATUS_PAID = 'paid';
+    const PAYMENT_STATUS_UNPAID = 'unpaid';
+
+    const STATUS_RECEIVED = 'received';
+    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_ON_PROCESS = 'on-process';
+    const STATUS_DELIVERY = 'delivery';
+    const STATUS_DONE = 'done';
+    const STATUS_CANCELLED = 'cancelled';
+
+    const TRANSACTION_CODE_FORMAT = 'TRX/UMKM/{date}/';
+
 
     use HasFactory, SoftDeletes;
 
@@ -33,5 +41,45 @@ class Transaction extends Model
     public function invoice()
     {
         return $this->hasOne(Invoice::class);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($transaction){
+
+            $transaction->generateTransactionCode();
+
+
+        });
+    }
+
+    private function generateTransactionCode(){
+        $now = Carbon::now();
+        $code = strtr(self::TRANSACTION_CODE_FORMAT,[
+            '{date}'=>$now->isoFormat('YYYYMMDD')
+        ]);
+        $lastOrder = static::where(['code','like',$code])->orderBy('id','desc')->first();
+        $lastOrderCode = $lastOrder->code ?? null;
+        $transactionCode = $code.'000001';
+        if($lastOrderCode){
+            $lastOrderNumber = str_replace($code, '', $lastOrderCode);
+            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber +1);
+            $transactionCode = $code . $nextOrderNumber;
+        }
+        if (self::isOrderCodeExist($transactionCode)) {
+            throw new Exception('transaction code exists');
+        }
+
+        $this->attributes['code'] = $transactionCode;
+
+        if( is_null($this->attributes['code']) )
+            return false; // failed to create code
+        else
+            return true;
+    }
+
+    private function isOrderCodeExist($orderCode)
+    {
+        return self::where(['code',$orderCode])->exists();
     }
 }
