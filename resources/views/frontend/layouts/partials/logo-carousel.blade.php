@@ -11,13 +11,16 @@
                         <img src="{{ asset('frontend/assets/img/company-logos/2.png') }}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="{{ asset('frontend/assets/img/company-logos/3.png') }}" alt="">
+                        <img src="{{ asset('frontend/assets/img/company-logos/1.png') }}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="{{ asset('frontend/assets/img/company-logos/4.png') }}" alt="">
+                        <img src="{{ asset('frontend/assets/img/company-logos/2.png') }}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="{{ asset('frontend/assets/img/company-logos/5.png') }}" alt="">
+                        <img src="{{ asset('frontend/assets/img/company-logos/1.png') }}" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="{{ asset('frontend/assets/img/company-logos/2.png') }}" alt="">
                     </div>
                 </div>
             </div>
