@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Frontend\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,4 +24,8 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.home.
 
 Route::group(['prefix' => 'shop'], function () {
     Route::get('/', [ShopController::class, 'index'])->name('frontend.shop.index');
+});
+
+Route::group(['prefix' => 'payment'], function () {
+    Route::get('/notification', [PaymentController::class, 'notification'])->name('frontend.payment.notification');
 });

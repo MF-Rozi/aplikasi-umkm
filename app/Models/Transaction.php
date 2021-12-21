@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
+
+    const TRANSACTION_STATUS_RECEIVED = 'received';
+    const TRANSACTION_STATUS_PAID = 'paid';
+    const TRANSACTION_STATUS_ON_PROCESS = 'on-process';
+    const TRANSACTION_STATUS_DELIVERY = 'delivery';
+    const TRANSACTION_STATUS_DONE = 'done';
+    const TRANSACTION_STATUS_CANCELLED = 'cancelled';
+
     use HasFactory, SoftDeletes;
 
     public function user()
