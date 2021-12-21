@@ -181,7 +181,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-
+        Darryldecode\Cart\CartServiceProvider::class,
 
 
     ],
@@ -240,7 +240,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Midtrans' => App\Services\Midtrans\Facade\Midtrans::class,
-
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
     ],
 
