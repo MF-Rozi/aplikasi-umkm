@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <p>See more Details</p>
+                    <p>Lihat Detail Produk</p>
                     <h1>{{ $productDetail->name }}</h1>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     <p>Stock: {{ $productDetail->stock }}</p>
                     <div class="single-product-form">
                         <form action="index.html">
-                            <input type="number" placeholder="0">
+                            <input type="number" placeholder="1" value="1">
                         </form>
                         <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                         <p>
@@ -65,50 +65,55 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="section-title">
-                    <h3><span class="orange-text">Related</span> Products</h3>
+                    <h3>Produk yang <span class="orange-text">Berhubungan</span></h3>
                     <p>Lihat Product yang Berhubungan dan lainnya</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            @if(count($category->products)<=1) <?php $products = Product::all()  ?> @foreach ($products as $product) <div class="col-lg-4 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ route('frontend.shop.single-product',['slug'=> $product->slug]) }}"><img src=" {{ $product->pictures()->first()->getUrl() }} " alt="{{ $product->pictures()->first()->name }}" height="200px"></a>
+            @if(count($category->products)<=1) <?php $products = Product::all()  ?> @foreach ($products as $product) @if($product->name == $productDetail->name)
 
+                @else
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="{{ route('frontend.shop.single-product',['slug'=> $product->slug]) }}"><img src=" {{ $product->pictures()->first()->getUrl() }} " alt="{{ $product->pictures()->first()->name }}" height="200px"></a>
+
+                        </div>
+                        <h3>{{ $product->name }}</h3>
+                        <p class="product-price"> Rp {{ number_format($product->price,0,',','.') }} </p>
+                        <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
-                    <h3>{{ $product->name }}</h3>
-                    <p class="product-price"> Rp {{ number_format($product->price,0,',','.') }} </p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
-        </div>
-        @endforeach
+                @endif
 
-        @else
+                @endforeach
 
-        @foreach ($category->products as $productCategory)
-        @if($productCategory->name == $productDetail->name)
+                @else
 
-        @else
-        <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-                <div class="product-image">
-                    <a href="{{ route('frontend.shop.single-product',['slug'=> $productCategory->slug]) }}"><img src=" {{ $productCategory->pictures()->first()->getUrl() }} " alt="{{ $productCategory->pictures()->first()->name }}" height="200px"></a>
+                @foreach ($category->products as $productCategory)
+                @if($productCategory->name == $productDetail->name)
 
+                @else
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="{{ route('frontend.shop.single-product',['slug'=> $productCategory->slug]) }}"><img src=" {{ $productCategory->pictures()->first()->getUrl() }} " alt="{{ $productCategory->pictures()->first()->name }}" height="200px"></a>
+
+                        </div>
+                        <h3>{{ $productCategory->name }}</h3>
+                        <p class="product-price"> Rp {{ number_format($productCategory->price,0,',','.') }} </p>
+                        <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    </div>
                 </div>
-                <h3>{{ $productCategory->name }}</h3>
-                <p class="product-price"> Rp {{ number_format($productCategory->price,0,',','.') }} </p>
-                <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-            </div>
+                @endif
+
+                @endforeach
+                @endif
+
+
         </div>
-        @endif
-
-        @endforeach
-        @endif
-
-
     </div>
-</div>
 </div>
 <!-- end more products -->
 @endsection

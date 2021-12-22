@@ -1,4 +1,6 @@
 <?php
+namespace App\Services\ShoppingCart;
+
 use App\Models\DatabaseStorageModel;
 use Darryldecode\Cart\CartCollection;
 

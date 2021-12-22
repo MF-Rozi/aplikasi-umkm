@@ -6,7 +6,7 @@
                 <div class="main-menu-wrap">
                     <!-- logo -->
                     <div class="site-logo">
-                        <a href="index.html">
+                        <a href="/">
                             <img src="{{ asset('frontend/assets/img/logo.png') }}" alt="">
                         </a>
                     </div>
@@ -62,15 +62,15 @@
                                     @else
                                     <a href="{{ route('login') }}">Login</a>
                                     @endif
-                                    <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
-                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                                    <a class="shopping-cart" href="{{ route('frontend.cart.index') }}"><i class="fas fa-shopping-cart"></i></a>
+                                    {{-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> --}}
 
 
                                 </div>
                             </li>
                         </ul>
                     </nav>
-                    <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                    {{-- <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a> --}}
                     <div class="mobile-menu"></div>
 
                     <!-- menu end -->
@@ -80,7 +80,7 @@
     </div>
 </div>
 <!-- end header -->
-<!-- search area -->
+{{-- <!-- search area -->
 <div class="search-area">
     <div class="container">
         <div class="row">
@@ -97,4 +97,4 @@
         </div>
     </div>
 </div>
-<!-- end search area -->
+<!-- end search area --> --}}

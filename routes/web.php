@@ -29,12 +29,14 @@ Route::group(['prefix' => 'shop'], function () {
     Route::get('/{slug}/detail', [ShopController::class, 'detail'])->name('frontend.shop.single-product');
 });
 
-Route::group(['prefix' => 'payment','middleware'=>'auth'], function () {
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('/', [CartController::class, 'index'])->name('frontend.cart.index');
+});
+
+Route::group(['prefix' => 'payment','middleware' => 'auth'], function () {
     Route::get('/notification', [PaymentController::class, 'notification'])->name('frontend.payment.notification');
     Route::get('/finish', [PaymentController::class, 'finish'])->name('frontend.payment.finish');
     Route::get('/unfinish', [PaymentController::class, 'unfinish'])->name('frontend.payment.unfinish');
     Route::get('/error', [PaymentController::class, 'unfinish'])->name('frontend.payment.error');
     Route::post('/', [PaymentController::class, 'create'])->name('frontend.payment.create');
-
-
 });
