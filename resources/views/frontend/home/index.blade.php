@@ -87,7 +87,15 @@
                     </div>
                     <h3>{{ $product->name }}</h3>
                     <p class="product-price">Rp {{ number_format($product->price,0,',','.') }}</p>
-                    <a href="" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <form action="{{ route('frontend.cart.add') }}" method="POST">
+                        @csrf
+                        <input type="hidden" value="{{ $product->id }}" name="id">
+                        <input type="hidden" value="{{ $product->name }}" name="name">
+                        <input type="hidden" value="{{ $product->price }}" name="price">
+                        <input type="hidden" value="1" name="quantity">
+                        <input type="hidden" value="{{ $product->slug }}" name="slug">
+                        <button class="cart-btn btn-border-orange" type="submit"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                    </form>
                 </div>
             </div>
             @endforeach

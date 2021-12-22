@@ -28,7 +28,7 @@ class AddToCartRequest extends FormRequest
             'name' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'attributes' => 'nullable',
+            'slug' => 'required',
         ];
     }
 }

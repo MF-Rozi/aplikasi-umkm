@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,10 +33,13 @@ Route::group(['prefix' => 'shop'], function () {
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/', [CartController::class, 'index'])->name('frontend.cart.index');
+    Route::post('/add', [CartController::class, 'addToCart'])->name('frontend.cart.add');
+    Route::post('/update', [CartController::class, 'updateCart'])->name('frontend.cart.update');
+    Route::post('/delete', [CartController::class, 'deleteCart'])->name('frontend.cart.delete');
 });
 
 Route::group(['prefix' => 'payment','middleware' => 'auth'], function () {
-    Route::get('/notification', [PaymentController::class, 'notification'])->name('frontend.payment.notification');
+    Route::post('/notification', [PaymentController::class, 'notification'])->name('frontend.payment.notification')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class, Authenticate::class]);
     Route::get('/finish', [PaymentController::class, 'finish'])->name('frontend.payment.finish');
     Route::get('/unfinish', [PaymentController::class, 'unfinish'])->name('frontend.payment.unfinish');
     Route::get('/error', [PaymentController::class, 'unfinish'])->name('frontend.payment.error');

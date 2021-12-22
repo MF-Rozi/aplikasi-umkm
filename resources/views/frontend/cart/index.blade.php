@@ -17,11 +17,15 @@
 <!-- end breadcrumb section -->
 
 <!-- cart -->
+
 <div class="cart-section mt-150 mb-150">
     <div class="container">
         <div class="row">
+            <h4>Alamat Pengiriman: {{ Auth::user()->profile->full_adress }}</h4>
             <div class="col-lg-8 col-md-12">
+
                 <div class="cart-table-wrap">
+
                     <table class="cart-table">
                         <thead class="cart-table-head">
                             <tr class="table-head-row">
@@ -30,20 +34,34 @@
                                 <th class="product-name">Name</th>
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
-                                <th class="product-total">Total</th>
+                                <th class="product-total">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($carts as $cart)
                             <tr class="table-body-row">
-                                <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                                <td class="product-image"><img src="" alt=""></td>
-                                <td class="product-name">Strawberry</td>
-                                <td class="product-price">$85</td>
-                                <td class="product-quantity"><input type="number" placeholder="0"></td>
-                                <td class="product-total">1</td>
+
+                                <td class="product-remove">
+                                    <form action="{{ route('frontend.cart.delete') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="{{ $cart->id }}" name="id">
+                                        <button class="btn btn-outline-white" type="submit"><i class="far fa-window-close"></i></button>
+                                    </form>
+                                </td>
+                                <td class="product-image"><img src="{{ $cart->attributes['image'] }}" alt=""></td>
+                                <td class="product-name">{{ $cart->name }}</td>
+                                <td class="product-price">{{ rupiah($cart->price) }}</td>
+                                <form method="POST" action="{{ route('frontend.cart.update') }}">
+                                    @csrf
+                                    <input type="hidden" value="{{ $cart->id }}" name="id">
+                                    <td class="product-quantity"><input type="number" placeholder="1" value="{{ $cart->quantity }}" name="quantity"></td>
+                                    <td><button type="submit" class="boxed-btn btn-border-orange">Update</button></td>
+                                </form>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
 
@@ -59,21 +77,24 @@
                         <tbody>
                             <tr class="total-data">
                                 <td><strong>Subtotal: </strong></td>
-                                <td>$500</td>
+                                <td>Rp{{ $subtotal }}</td>
                             </tr>
-                            <tr class="total-data">
+                            {{-- <tr class="total-data">
                                 <td><strong>Shipping: </strong></td>
                                 <td>$45</td>
-                            </tr>
+                            </tr> --}}
                             <tr class="total-data">
                                 <td><strong>Total: </strong></td>
-                                <td>$545</td>
+                                <td>Rp{{ $total }}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="cart-buttons">
-                        <a href="cart.html" class="boxed-btn">Update Cart</a>
-                        <a href="checkout.html" class="boxed-btn black">Check Out</a>
+                        <form action="{{ route('frontend.payment.create') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn boxed-btn black">Check Out</button>
+                        </form>
+
                     </div>
                 </div>
 
@@ -90,5 +111,6 @@
         </div>
     </div>
 </div>
+
 <!-- end cart -->
 @endsection

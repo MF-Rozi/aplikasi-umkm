@@ -99,7 +99,7 @@
     <script src="{{ asset('frontend/assets/js/sticker.js') }}"></script>
     <!-- main js -->
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
-
+    @include('sweetalert::alert')
     @yield('script-body')
 </body>
 @yield('script-after')
