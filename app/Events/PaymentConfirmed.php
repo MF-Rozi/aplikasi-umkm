@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PaymentConfirmed implements  ShouldBroadcast
+class PaymentConfirmed implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,14 +23,14 @@ class PaymentConfirmed implements  ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Payment $payment, Transaction $transaction)
-    {
-        $this->payment = $payment;
-        $this->transaction = $transaction;
-    }
+    // public function __construct(Payment $payment, Transaction $transaction)
+    // {
+    //     $this->payment = $payment;
+    //     $this->transaction = $transaction;
+    // }
 
-    public function broadcastOn() {
+    public function broadcastOn()
+    {
         return new PrivateChannel('payment');
     }
-
 }

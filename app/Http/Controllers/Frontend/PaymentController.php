@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Midtrans\Notification;
 use App\Services\Midtrans\Facades\Midtrans;
+use Cart;
 
 class PaymentController extends Controller
 {
@@ -23,9 +24,9 @@ class PaymentController extends Controller
 
         $midtransNotification = Midtrans::notification();
         $notification = $midtransNotification->toObject();
-
+        // dd($notification);
         // $notification = $request;
-        $verified = $this->verifyNotification($notification);
+        $verified = $this->verifyNotification($midtransNotification);
         if ($verified) {
             // $midtransNotification->onCapture(function () use ($notification) {
             //     $this->createPayment();
@@ -43,9 +44,12 @@ class PaymentController extends Controller
             $orderId = $notification->order_id;
             $amount = $notification->gross_amount;
 
-            $transaction = Transaction::where('code', $orderId)->firstOrDie();
+            $transaction = Transaction::where('code', $orderId)->first();
 
             $payment = Payment::where('transaction_code', $transaction->code)->first();
+            $decode = json_encode($notification);
+
+            $payment->payload = $decode;
 
             if (!empty($notification->va_numbers[0])) {
                 $payment->va = $notification->va_numbers[0]->va_number;
@@ -91,7 +95,7 @@ class PaymentController extends Controller
                     $transaction->status = Transaction::STATUS_CONFIRMED;
                 }
                 $transaction->save();
-                PaymentConfirmed::dispatch($payment);
+                // PaymentConfirmed::dispatch($payment);
             });
         }
     }
@@ -109,18 +113,26 @@ class PaymentController extends Controller
             });
 
 
+
         try {
             DB::beginTransaction();
 
             $transaksi = $this->setupTransaction($user, $cart, $carbon);
 
+            $payment = Payment::create([
+                'status' => Payment::STATUS_PENDING,
+                'transaction_code' => $transaksi->code,
+                'amount' => $transaksi->grand_total,
+                'expired' => $carbon->addDay(),
+
+            ]);
             $items = $this->setupDetailTransaction($transaksi, $cart);
 
             $snapPayload = $this->setupSnapPayload($transaksi, $user, $items);
 
             $snap = Midtrans::createTransaction($snapPayload);
 
-            $transaksi->payment_token = $snap->snap_token;
+            $transaksi->payment_token = $snap->token;
             $transaksi->payment_url = $snap->redirect_url;
             $transaksi->save();
 
