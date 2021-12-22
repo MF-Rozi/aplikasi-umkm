@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Events\PaymentConfirmed;
-use App\Http\Controllers\Controller;
+use Exception;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Payment;
 use App\Models\Transaction;
-use App\Models\TransactionDetail;
-use App\Models\User;
-use App\Services\Midtrans\Facades\Midtrans;
-use App\Services\Midtrans\Notification;
-use Carbon\Carbon;
-use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Events\PaymentConfirmed;
+use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Midtrans\Notification;
+use App\Services\Midtrans\Facades\Midtrans;
 
 class PaymentController extends Controller
 {
     public function notification(Request $request)
     {
-        /**
-         * @var Notification $midtransNotification
-         */
+
         $midtransNotification = Midtrans::notification();
         $notification = $midtransNotification->toObject();
 
@@ -47,13 +45,13 @@ class PaymentController extends Controller
 
             $transaction = Transaction::where('code', $orderId)->firstOrDie();
 
-            $payment = Payment::where('transaction_code',$transaction->code)->first();
+            $payment = Payment::where('transaction_code', $transaction->code)->first();
 
             if (!empty($notification->va_numbers[0])) {
                 $payment->va = $notification->va_numbers[0]->va_number;
                 $payment->bank = $notification->va_numbers[0]->bank;
             }
-            if(!empty($notification->biller_code) || !empty($notification->bill_key)){
+            if (!empty($notification->biller_code) || !empty($notification->bill_key)) {
                 $payment->biller_code = $notification->biller_code;
                 $payment->bill_key = $notification->bill_key;
             }
@@ -83,21 +81,18 @@ class PaymentController extends Controller
                 $payment->status = Payment::STATUS_EXPIRE;
             } elseif ($notifTransactionStatus == 'cancel') {
                 // TODO set payment status in merchant's database to 'Denied'
-                $payment->status =Payment::STATUS_CANCEL;
+                $payment->status = Payment::STATUS_CANCEL;
             }
 
-            DB::transaction(function () use($payment, $transaction){
+            DB::transaction(function () use ($payment, $transaction) {
                 $payment->save();
-                if($payment->status === Payment::STATUS_SETTLEMENT || $payment->status === Payment::STATUS_SUCCESS){
+                if ($payment->status === Payment::STATUS_SETTLEMENT || $payment->status === Payment::STATUS_SUCCESS) {
                     $transaction->payment_status = Transaction::PAYMENT_STATUS_PAID;
                     $transaction->status = Transaction::STATUS_CONFIRMED;
-
                 }
                 $transaction->save();
                 PaymentConfirmed::dispatch($payment);
             });
-
-
         }
     }
 
@@ -108,46 +103,59 @@ class PaymentController extends Controller
             $carbon = Carbon::now();
             $cart = [];
 
-            Cart::session($user->getAuthIdentifier())->getContent()->each(function($item) use (&$cart){
+            $carts = Cart::session($user->getAuthIdentifier())->getContent();
+            $carts->each(function ($item) use (&$cart) {
                 $cart[] = $item;
             });
-            DB::transaction(function() use ($user, $cart, $carbon){
-                $transaksi = $this->setupTransaction($user, $cart, $carbon);
-
-                $items = $this->setupDetailTransaction($transaksi, $cart);
-
-               $snapPayload =  $this->setupSnapPayload( $transaksi, $user, $items);
-
-              $snap =  Midtrans::createTransaction($snapPayload);
-
-              $transaksi->payment_token = $snap->snap_token;
-              $transaksi->payment_url = $snap->redirect_url;
-              $transaksi->save();
-              Cart::clear();
 
 
-                return(redirect($snap->redirect_url));
-            });
+        try {
+            DB::beginTransaction();
 
-            //TODO: RETURN KE CART KARENA GAGAL
+            $transaksi = $this->setupTransaction($user, $cart, $carbon);
+
+            $items = $this->setupDetailTransaction($transaksi, $cart);
+
+            $snapPayload = $this->setupSnapPayload($transaksi, $user, $items);
+
+            $snap = Midtrans::createTransaction($snapPayload);
+
+            $transaksi->payment_token = $snap->snap_token;
+            $transaksi->payment_url = $snap->redirect_url;
+            $transaksi->save();
+
+            DB::commit();
+            Cart::clear();
 
 
+            return(redirect($snap->redirect_url));
+        } catch (Exception $e) {
+            dd($e);
+            DB::rollBack();
+        }
 
 
-
+           return redirect(route('frontend.cart.index', [
+                'carts' => $carts,
+           ]));
     }
 
     public function finish(Request $request)
     {
+        alert()->success('Transaksi Sukses', 'Pembayaran anda berhasil.');
         return redirect('frontend.index');
     }
 
-    public function unfinish(Request $request){
+    public function unfinish(Request $request)
+    {
+                alert()->warning('Transaksi Belum selesai', 'Pembayaran belum selesai');
+
         return redirect('frontend.index');
     }
 
     public function error(Request $request)
     {
+        alert()->error('Transaksi Gagal', 'Pembayaran anda gagal');
         return redirect('frontend.index');
     }
 
@@ -168,7 +176,7 @@ class PaymentController extends Controller
 
         $transaction = Transaction::make();
 
-        if(isset($user)){
+        if (isset($user)) {
             $transaction->user_id = $user->id;
         }
         $transaction->generateTransactionCode();
@@ -181,23 +189,24 @@ class PaymentController extends Controller
         return $transaction;
     }
 
-    private function setupDetailTransaction($transaction, $cart){
+    private function setupDetailTransaction($transaction, $cart)
+    {
         $items = [];
 
-        foreach ($cart as $product){
+        foreach ($cart as $product) {
             $item = [
-                'id'=> $product['id'],
-                'price'=>$product['price'],
-                'quantity'=>$product['quantity'],
-                'name'=>$product['name']
+                'id' => $product['id'],
+                'price' => $product['price'],
+                'quantity' => $product['quantity'],
+                'name' => $product['name']
             ];
             $items[] = $item;
 
-           TransactionDetail::create([
-                'product_id'=>$item['id'],
-                'transaction_id'=>$transaction->id,
-                'qty'=>$item['quantity'],
-                'base_price'=>$item['price'],
+            TransactionDetail::create([
+                'product_id' => $item['id'],
+                'transaction_id' => $transaction->id,
+                'qty' => $item['quantity'],
+                'base_price' => $item['price'],
                 'sub_total' => $item['price'] * $item['quantity']
             ]);
         }
@@ -206,18 +215,19 @@ class PaymentController extends Controller
         return $items;
     }
 
-    private function setupSnapPayload(Transaction $transaction, User $user, $items){
+    private function setupSnapPayload(Transaction $transaction, User $user, $items)
+    {
 
         $transactionDetail = [
-            'order_id' =>  $transaction->code,
-            'gross_amount' =>$transaction->grand_total
+            'order_id' => $transaction->code,
+            'gross_amount' => $transaction->grand_total,
         ];
         $billingAddress = [
             'first_name' => $user->profile->nama_depan,
             'last_name' => $user->profile->nama_belakang,
             'address' => $user->profile->alamat1,
             'city' => $user->profile->kota,
-            'country_code' => 'IDN'
+            'country_code' => 'IDN',
         ];
         $customerDetail = [
             'first_name' => $user->profile->nama_depan,
@@ -225,11 +235,11 @@ class PaymentController extends Controller
             'email' => $user->email,
             'phone' => $user->phone,
             'billing_address' => $billingAddress,
-            'shipping_address' => $billingAddress
+            'shipping_address' => $billingAddress,
         ];
 
         $snapPayload = [
-            'enable_payments'=>Payment::PAYMENT_CHANNELS,
+            'enable_payments' => Payment::PAYMENT_CHANNELS,
             'transaction_details' => $transactionDetail,
             'customer_details' => $customerDetail,
             'item_details' => $items,

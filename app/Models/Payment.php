@@ -30,7 +30,8 @@ class Payment extends Model
 
     const PAYMENT_CODE_FORMAT = 'PAY/UMKM/{date}/';
     const PAYMENT_CHANNELS = ['credit_card','mandiri_clickpay','cimb_clicks','bca_klikbca','bca_klikpay','bri_epay','echannel','permata_va','bca_va','bni_va','other_va','gopay','indomaret',
-        'danamon_online','akulaku','kioson','echannel'];
+        'danamon_online','akulaku','kioson','echannel',
+    ];
 
     protected $guarded = ['id', 'code'];
 
@@ -39,18 +40,16 @@ class Payment extends Model
         return $this->belongsTo(Transaction::class, 'transaction_code', 'code');
     }
 
-   protected $dispatchesEvents = [
-        'created'=> PaymentConfirmed::class
+    protected $dispatchesEvents = [
+        'created' => PaymentConfirmed::class,
     ];
 
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($payment){
+        static::creating(function ($payment) {
 
             $payment->generatePaymentCode();
-
-
         });
     }
 
@@ -63,31 +62,33 @@ class Payment extends Model
      */
     private function isOrderCodeExist($orderCode)
     {
-        return self::where(['code',$orderCode])->exists();
+        return self::where(['code', $orderCode])->exists();
     }
 
-    private function generatePaymentCode(){
+    private function generatePaymentCode()
+    {
         $now = Carbon::now();
-        $code = strtr(self::PAYMENT_CODE_FORMAT,[
-            '{date}'=>$now->isoFormat('YYYYMMDD')
+        $code = strtr(self::PAYMENT_CODE_FORMAT, [
+            '{date}' => $now->isoFormat('YYYYMMDD'),
         ]);
-        $lastOrder = static::where(['code','like',$code])->orderBy('id','desc')->first();
+        $lastOrder = static::where(['code', 'like', $code])->orderBy('id', 'desc')->first();
         $lastOrderCode = $lastOrder->code ?? null;
         $paymentCode = $code.'000001';
-        if($lastOrderCode){
+        if ($lastOrderCode) {
             $lastOrderNumber = str_replace($code, '', $lastOrderCode);
-            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber +1);
+            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber + 1);
             $paymentCode = $code . $nextOrderNumber;
         }
-        if (self::isOrderCodeExist($paymentCode)) {
+        if ($this->isOrderCodeExist($paymentCode)) {
             throw new Exception('kode pembayaran exists');
         }
 
         $this->attributes['code'] = $paymentCode;
 
-        if( is_null($this->attributes['code']) )
+        if (is_null($this->attributes['code'])) {
             return false; // failed to create code
-        else
+        } else {
             return true;
+        }
     }
 }

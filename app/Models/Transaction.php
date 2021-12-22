@@ -45,41 +45,41 @@ class Transaction extends Model
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($transaction){
+        static::creating(function ($transaction) {
 
             $transaction->generateTransactionCode();
-
-
         });
     }
 
-    private function generateTransactionCode(){
+    private function generateTransactionCode()
+    {
         $now = Carbon::now();
-        $code = strtr(self::TRANSACTION_CODE_FORMAT,[
-            '{date}'=>$now->isoFormat('YYYYMMDD')
+        $code = strtr(self::TRANSACTION_CODE_FORMAT, [
+            '{date}' => $now->isoFormat('YYYYMMDD'),
         ]);
-        $lastOrder = static::where(['code','like',$code])->orderBy('id','desc')->first();
+        $lastOrder = static::where(['code', 'like', $code])->orderBy('id', 'desc')->first();
         $lastOrderCode = $lastOrder->code ?? null;
         $transactionCode = $code.'000001';
-        if($lastOrderCode){
+        if ($lastOrderCode) {
             $lastOrderNumber = str_replace($code, '', $lastOrderCode);
-            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber +1);
+            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber + 1);
             $transactionCode = $code . $nextOrderNumber;
         }
-        if (self::isOrderCodeExist($transactionCode)) {
+        if ($this->isOrderCodeExist($transactionCode)) {
             throw new Exception('transaction code exists');
         }
 
         $this->attributes['code'] = $transactionCode;
 
-        if( is_null($this->attributes['code']) )
+        if (is_null($this->attributes['code'])) {
             return false; // failed to create code
-        else
+        } else {
             return true;
+        }
     }
 
     private function isOrderCodeExist($orderCode)
     {
-        return self::where(['code',$orderCode])->exists();
+        return self::where(['code', $orderCode])->exists();
     }
 }
