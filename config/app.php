@@ -171,7 +171,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Services\Midtrans\Providers\MidtransServiceProvider::class,
@@ -239,7 +239,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'Midtrans' => App\Services\Midtrans\Facade\Midtrans::class,
+        'Midtrans' => App\Services\Midtrans\Facades\Midtrans::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
     ],

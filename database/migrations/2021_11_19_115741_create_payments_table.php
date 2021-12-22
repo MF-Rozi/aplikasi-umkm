@@ -17,13 +17,13 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('status');
-            $table->string('method');
-            $table->string('va');
+            $table->string('method')->nullable();
+            $table->string('va')->nullable();
             $table->string('transaction_code');
             $table->string('amount');
             $table->timestamp('expired');
-            $table->string('biller_code');
-            $table->string('biller_key');
+            $table->string('biller_code')->nullable();
+            $table->string('biller_key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
