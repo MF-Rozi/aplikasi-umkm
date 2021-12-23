@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductPictureController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\TransactionController;
 use App\Models\ProductPicture;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], function () {
@@ -55,5 +56,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
         Route::delete('/{slug}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
         Route::post('/product/upload/picture', [ProductController::class, 'uploadPicture'])->name('admin.product.upload.picture');
         Route::post('/product/picture/delete/{id}', [ProductController::class, 'deletePicture'])->name('admin.product.picture.delete');
+    });
+    Route::group(['prefix' => 'transactions'], function () {
+        Route::get('/', [TransactionController::class, 'index'])->name('admin.transaction.index');
     });
 });

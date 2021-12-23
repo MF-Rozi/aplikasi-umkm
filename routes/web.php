@@ -32,7 +32,7 @@ Route::group(['prefix' => 'shop'], function () {
     Route::get('/{slug}/detail', [ShopController::class, 'detail'])->name('frontend.shop.single-product');
 });
 
-Route::group(['prefix' => 'cart'], function () {
+Route::group(['prefix' => 'cart','middleware' => 'auth'], function () {
     Route::get('/', [CartController::class, 'index'])->name('frontend.cart.index');
     Route::post('/add', [CartController::class, 'addToCart'])->name('frontend.cart.add');
     Route::post('/update', [CartController::class, 'updateCart'])->name('frontend.cart.update');
