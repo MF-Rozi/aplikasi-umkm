@@ -152,20 +152,20 @@ class PaymentController extends Controller
     public function finish(Request $request)
     {
         alert()->success('Transaksi Sukses', 'Pembayaran anda berhasil.');
-        return redirect('frontend.index');
+        return redirect(route('frontend.home.index'));
     }
 
     public function unfinish(Request $request)
     {
                 alert()->warning('Transaksi Belum selesai', 'Pembayaran belum selesai');
 
-        return redirect('frontend.index');
+        return redirect(route('frontend.home.index'));
     }
 
     public function error(Request $request)
     {
         alert()->error('Transaksi Gagal', 'Pembayaran anda gagal');
-        return redirect('frontend.index');
+        return redirect(route('frontend.home.index'));
     }
 
     private function verifyNotification(Notification $notification)
