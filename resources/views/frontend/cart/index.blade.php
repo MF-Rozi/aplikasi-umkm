@@ -54,7 +54,7 @@
                                 <form method="POST" action="{{ route('frontend.cart.update') }}">
                                     @csrf
                                     <input type="hidden" value="{{ $cart->id }}" name="id">
-                                    <td class="product-quantity"><input type="number" placeholder="1" value="{{ $cart->quantity }}" name="quantity"></td>
+                                    <td class="product-quantity"><input type="number" placeholder="1" value="{{ $cart->quantity }}" name="quantity" min="1"></td>
                                     <td><button type="submit" class="boxed-btn btn-border-orange">Update</button></td>
                                 </form>
                             </tr>

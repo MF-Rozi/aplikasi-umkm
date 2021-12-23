@@ -37,16 +37,24 @@
                             </li> --}}
                             <li><a href="{{ route('frontend.home.contact') }}">Contact</a></li>
                             <li><a href="{{ route('frontend.shop.index') }}">Shop</a>
-                                <ul class="sub-menu">
+                                {{-- <ul class="sub-menu">
                                     <li><a href="checkout.html">Check Out</a></li>
                                     <li><a href="single-product.html">Single Product</a></li>
                                     <li><a href="cart.html">Cart</a></li>
-                                </ul>
+                                </ul> --}}
                             </li>
+
                             <li>
                                 <div class="header-icons">
                                     @if(!empty(Auth::user()))
                                     <a href="">{{ Auth::user()->email }}</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="">Profile</a></li>
+                                        <li><a href="{{ route('frontend.transaction.index') }}">Transactions</a></li>
+                                        @if(Auth::user()->hasRole(['admin','super-admin']))
+                                        <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                        @endif
+                                    </ul>
                                     <a href="">
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
@@ -55,9 +63,7 @@
                                             </button>
                                         </form>
                                     </a>
-                                    @if(Auth::user()->hasRole(['admin','super-admin']))
-                                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-                                    @endif
+
 
                                     @else
                                     <a href="{{ route('login') }}">Login</a>
