@@ -116,7 +116,7 @@ class PaymentController extends Controller
                 'status' => Transaction::STATUS_RECEIVED
             ]);
 
-            $payment = Payment::create([
+            Payment::create([
                 'status' => Payment::STATUS_PENDING,
                 'transaction_code' => $transaksi->code,
                 'amount' => $transaksi->grand_total,

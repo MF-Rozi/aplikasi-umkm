@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\TransactionController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -44,4 +45,10 @@ Route::group(['prefix' => 'payment','middleware' => 'auth'], function () {
     Route::get('/unfinish', [PaymentController::class, 'unfinish'])->name('frontend.payment.unfinish');
     Route::get('/error', [PaymentController::class, 'unfinish'])->name('frontend.payment.error');
     Route::post('/', [PaymentController::class, 'create'])->name('frontend.payment.create');
+});
+
+Route::group(['prefix' => 'transaction','middleware' => 'auth'], function () {
+    Route::get('/', [TransactionController::class, 'index'])->name('frontend.transaction.index');
+    Route::get('/show/{id}', [TransactionController::class, 'show'])->name('frontend.transaction.show');
+    Route::post('/cancel', [TransactionController::class, 'cancel'])->name('frontend.transaction.cancel');
 });
