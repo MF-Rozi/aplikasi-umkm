@@ -12,6 +12,7 @@ use App\Events\PaymentConfirmed;
 use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\TransactionHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Midtrans\Notification;
 use App\Services\Midtrans\Facades\Midtrans;
@@ -24,20 +25,8 @@ class PaymentController extends Controller
 
         $midtransNotification = Midtrans::notification();
         $notification = $midtransNotification->toObject();
-        // dd($notification);
-        // $notification = $request;
         $verified = $this->verifyNotification($midtransNotification);
         if ($verified) {
-            // $midtransNotification->onCapture(function () use ($notification) {
-            //     $this->createPayment();
-            //     $this->updateTransaction()
-            // })->onSettlement(function () use ($notification) {
-            // })->onPending(function () use ($notification) {
-            // })->onDeny(function () use ($notification) {
-            // })->onExpire(function () use ($notification) {
-            // })->onCancel(function () use ($notification) {
-            // });
-
             $notifTransactionStatus = $notification->transaction_status;
             $fraud = $notification->fraud_status;
             $type = $notification->payment_type;
@@ -93,6 +82,10 @@ class PaymentController extends Controller
                 if ($payment->status === Payment::STATUS_SETTLEMENT || $payment->status === Payment::STATUS_SUCCESS) {
                     $transaction->payment_status = Transaction::PAYMENT_STATUS_PAID;
                     $transaction->status = Transaction::STATUS_CONFIRMED;
+                    TransactionHistory::create([
+                        'transaction_id' => $transaction->id,
+                        'status' => Transaction::STATUS_CONFIRMED
+                    ]);
                 }
                 $transaction->save();
                 // PaymentConfirmed::dispatch($payment);
@@ -118,6 +111,10 @@ class PaymentController extends Controller
             DB::beginTransaction();
 
             $transaksi = $this->setupTransaction($user, $cart, $carbon);
+            TransactionHistory::create([
+                'transaction_id' => $transaksi->id,
+                'status' => Transaction::STATUS_RECEIVED
+            ]);
 
             $payment = Payment::create([
                 'status' => Payment::STATUS_PENDING,

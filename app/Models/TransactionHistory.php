@@ -10,6 +10,7 @@ class TransactionHistory extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = ['id'];
     public function transaction()
     {
         return $this->belongsTo(Transaction::class);
