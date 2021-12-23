@@ -10,16 +10,22 @@ use Spatie\Sluggable\SlugOptions;
 
 class Profile extends Model
 {
-    use HasFactory, SoftDeletes,HasSlug;
-
+    use HasFactory;
+    use SoftDeletes;
+    use HasSlug;
 
     protected $guarded = ['id'];
 
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(['first_name', 'last_name'])
-            ->saveSlugsTo('slug');
+        ->generateSlugsFrom(['first_name', 'last_name'])
+        ->saveSlugsTo('slug');
+    }
+    public function getFullAdressAttribute()
+    {
+        $address = [];
+        return "{$this->address1}, {$this->address2}, {$this->district}, {$this->province}, {$this->post_code}";
     }
     public function getFullNameAttribute()
     {

@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
             $table->string('payment_token')->nullable();
             $table->string('payment_url')->nullable();
             $table->string('note')->nullable(); // text atau string?
-            $table->timestamp('cencelation_at');
+            $table->timestamp('cencelation_at')->nullable();
             $table->string('cancelation_note')->nullable(); // text atau string?
             $table->timestamps();
             $table->softDeletes();

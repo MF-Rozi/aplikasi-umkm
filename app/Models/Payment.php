@@ -62,16 +62,16 @@ class Payment extends Model
      */
     private function isOrderCodeExist($orderCode)
     {
-        return self::where(['code', $orderCode])->exists();
+        return self::where('code', $orderCode)->exists();
     }
 
-    private function generatePaymentCode()
+    public function generatePaymentCode()
     {
         $now = Carbon::now();
         $code = strtr(self::PAYMENT_CODE_FORMAT, [
             '{date}' => $now->isoFormat('YYYYMMDD'),
         ]);
-        $lastOrder = static::where(['code', 'like', $code])->orderBy('id', 'desc')->first();
+        $lastOrder = static::where('code', 'like', '%'.$code.'%')->orderBy('id', 'desc')->first();
         $lastOrderCode = $lastOrder->code ?? null;
         $paymentCode = $code.'000001';
         if ($lastOrderCode) {
