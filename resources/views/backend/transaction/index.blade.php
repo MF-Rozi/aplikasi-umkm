@@ -38,7 +38,11 @@
                                 <th>{{ rupiah($transaction->grand_total).'.000' }}</th>
                                 <th>{{ $transaction->status }}</th>
                                 <th>{{ $transaction->payment_status }}</th>
-                                <th></th>
+                                <th>
+                                    <a href="{{ route('admin.transaction.confirmed',['id'=>$transaction->id]) }}"> <button class="btn btn-info">Confirmed</button> </a>
+                                    <a href="{{ route('admin.transaction.canceled',['id'=>$transaction->id]) }}"> <button class="btn btn-danger">Cancel</button> </a>
+                                    <a href="{{ route('admin.transaction.show',['id'=>$transaction->id]) }}"> <button class="btn btn-primary">Detail</button> </a>
+                                </th>
 
                             </tr>
                             @else
@@ -72,7 +76,6 @@
                     <table id="datatable" class="table yajra-datatable align-item-center mb-0 text-center">
                         <thead>
                             <tr>
-
                                 <th>User</th>
                                 <th>Code</th>
                                 <th>Grand Total</th>
@@ -92,7 +95,11 @@
                                 <th>{{ rupiah($transaction->grand_total).'.000' }}</th>
                                 <th>{{ $transaction->status }}</th>
                                 <th>{{ $transaction->payment_status }}</th>
-                                <th></th>
+                                <th>
+                                    <a href="{{ route('admin.transaction.process',['id'=>$transaction->id]) }}"> <button class="btn btn-info">On-Process</button> </a>
+                                    <a href="{{ route('admin.transaction.canceled',['id'=>$transaction->id]) }}"> <button class="btn btn-danger">Cancel</button> </a>
+                                    <a href="{{ route('admin.transaction.show',['id'=>$transaction->id]) }}"> <button class="btn btn-primary">Detail</button> </a>
+                                </th>
 
                             </tr>
                             @else
@@ -146,7 +153,11 @@
                                 <th>{{ rupiah($transaction->grand_total).'.000' }}</th>
                                 <th>{{ $transaction->status }}</th>
                                 <th>{{ $transaction->payment_status }}</th>
-                                <th></th>
+                                <th>
+                                    <a href="{{ route('admin.transaction.delivery',['id'=>$transaction->id]) }}"> <button class="btn btn-info">Delivery</button> </a>
+                                    <a href="{{ route('admin.transaction.canceled',['id'=>$transaction->id]) }}"> <button class="btn btn-danger">Cancel</button> </a>
+                                    <a href="{{ route('admin.transaction.show',['id'=>$transaction->id]) }}"> <button class="btn btn-primary">Detail</button> </a>
+                                </th>
 
                             </tr>
                             @else
@@ -200,7 +211,11 @@
                                 <th>{{ rupiah($transaction->grand_total).'.000' }}</th>
                                 <th>{{ $transaction->status }}</th>
                                 <th>{{ $transaction->payment_status }}</th>
-                                <th></th>
+                                <th>
+                                    <a href="{{ route('admin.transaction.done',['id'=>$transaction->id]) }}"> <button class="btn btn-info">Done</button> </a>
+                                    <a href="{{ route('admin.transaction.canceled',['id'=>$transaction->id]) }}"> <button class="btn btn-danger">Cancel</button> </a>
+                                    <a href="{{ route('admin.transaction.show',['id'=>$transaction->id]) }}"> <button class="btn btn-primary">Detail</button> </a>
+                                </th>
 
                             </tr>
                             @else
@@ -254,7 +269,7 @@
                                 <th>{{ rupiah($transaction->grand_total).'.000' }}</th>
                                 <th>{{ $transaction->status }}</th>
                                 <th>{{ $transaction->payment_status }}</th>
-                                <th></th>
+                                <th><a href="{{ route('admin.transaction.show',['id'=>$transaction->id]) }}"> <button class="btn btn-primary">Detail</button> </a></th>
 
                             </tr>
                             @else
@@ -308,7 +323,7 @@
                                 <th>{{ rupiah($transaction->grand_total).'.000' }}</th>
                                 <th>{{ $transaction->status }}</th>
                                 <th>{{ $transaction->payment_status }}</th>
-                                <th></th>
+                                <th><a href="{{ route('admin.transaction.show',['id'=>$transaction->id]) }}"> <button class="btn btn-primary">Detail</button> </a></th>
 
                             </tr>
                             @else
