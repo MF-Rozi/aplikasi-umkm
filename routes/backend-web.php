@@ -57,7 +57,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|admin']], 
         Route::post('/product/upload/picture', [ProductController::class, 'uploadPicture'])->name('admin.product.upload.picture');
         Route::post('/product/picture/delete/{id}', [ProductController::class, 'deletePicture'])->name('admin.product.picture.delete');
     });
+
+    //transactions
     Route::group(['prefix' => 'transactions'], function () {
         Route::get('/', [TransactionController::class, 'index'])->name('admin.transaction.index');
+        Route::get('/{id}/process', [TransactionController::class, 'setOnProccess'])->name('admin.transaction.process');
+        Route::get('/{id}/confirm', [TransactionController::class, 'setConfirmed'])->name('admin.transaction.confirmed');
+        Route::get('/{id}/delivery', [TransactionController::class, 'setDelivery'])->name('admin.transaction.delivery');
+        Route::get('/{id}/done', [TransactionController::class, 'setDone'])->name('admin.transaction.done');
+        Route::get('/{id}/cancel', [TransactionController::class, 'setCancel'])->name('admin.transaction.canceled');
+        Route::get('/{id}/show', [TransactionController::class, 'showTransaction'])->name('admin.transaction.show');
     });
 });

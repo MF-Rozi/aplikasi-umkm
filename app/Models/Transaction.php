@@ -23,6 +23,7 @@ class Transaction extends Model
 
     const TRANSACTION_CODE_FORMAT = 'TRX/UMKM/{date}/';
 
+    protected $guarded = ['id'];
 
     use HasFactory, SoftDeletes;
 
