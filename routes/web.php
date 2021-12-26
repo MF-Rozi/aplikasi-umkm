@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BotManController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ShopController;
@@ -26,6 +27,9 @@ Route::get('/', [HomeController::class, 'index'])->name('frontend.home.index');
 Route::get('/about', [HomeController::class, 'about'])->name('frontend.home.about');
 Route::get('/404', [HomeController::class, 'notFound'])->name('frontend.home.404');
 Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.home.contact');
+Route::get('/profile', [HomeController::class, 'profile'])->middleware('auth')->name('frontend.home.profile');
+Route::post('/profile/update', [HomeController::class, 'profileUpdate'])->middleware('auth')->name('frontend.home.profileUpdate');
+Route::post('/profile/passwordUpdate', [HomeController::class, 'passwordUpdate'])->name('frontend.home.passwordUpdate');
 
 Route::group(['prefix' => 'shop'], function () {
     Route::get('/', [ShopController::class, 'index'])->name('frontend.shop.index');

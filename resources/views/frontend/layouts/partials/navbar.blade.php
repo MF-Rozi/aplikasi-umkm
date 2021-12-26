@@ -49,7 +49,7 @@
                                     @if(!empty(Auth::user()))
                                     <a href="">{{ Auth::user()->email }}</a>
                                     <ul class="sub-menu">
-                                        <li><a href="">Profile</a></li>
+                                        <li><a href="{{ route('frontend.home.profile') }}">Profile</a></li>
                                         <li><a href="{{ route('frontend.transaction.index') }}">Transactions</a></li>
                                         @if(Auth::user()->hasRole(['admin','super-admin']))
                                         <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
