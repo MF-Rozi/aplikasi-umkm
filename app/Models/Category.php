@@ -27,7 +27,7 @@ class Category extends Model
         if ($this->parent === null) {
             return 'null';
         } else {
-            $parent = Category::find($this->parent);
+            $parent = Category::find($this->parent->id);
             return $parent->name;
         }
     }
